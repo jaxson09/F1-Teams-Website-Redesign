@@ -40,7 +40,7 @@
 
   /* scroll progress bar and gentle parallax on full-bleed photos */
   const prog = $('.prog');
-  const layers = reduce ? [] : $$('.hero__bg, .band__bg, .phero__bg');
+  const layers = reduce ? [] : $$('.hero__bg');
   const onMove = () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     if (prog) prog.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
@@ -48,7 +48,7 @@
       const r = el.parentElement.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) return;
       const t = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
-      el.style.transform = `translate3d(0, ${(t * -7).toFixed(2)}%, 0) scale(1.14)`;
+      el.style.transform = `translate3d(0, ${(Math.max(0, -t) * 9).toFixed(2)}%, 0)`;
     });
   };
   addEventListener('scroll', onMove, { passive: true });

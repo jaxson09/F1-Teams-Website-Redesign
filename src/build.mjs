@@ -20,9 +20,14 @@ const link = (href, label, cls = '') => `<a class="cta ${cls}" href="${href}"><s
 const commons = (file) => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file.replace(/ /g, '_'))}`;
 const credit = (p) => `<a class="credit" href="${commons(p.file)}" rel="noopener">Photo: ${p.by} · ${p.lic}</a>`;
 
-const photo = (id, { cls = '', sizes = '100vw', eager = false, cap = true, pos = '' } = {}) => {
+const photo = (id, { cls = '', sizes = '100vw', eager = false, pos = '' } = {}) => {
   const p = d.photos[id];
-  return `<figure class="ph ${cls}"><img src="assets/img/${id}-1920.jpg" srcset="assets/img/${id}-960.jpg 960w, assets/img/${id}-1920.jpg 1920w" sizes="${sizes}" alt="${esc(p.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${pos ? ` style="object-position:${pos}"` : ''}>${cap ? `<figcaption>${credit(p)}</figcaption>` : ''}</figure>`;
+  return `<figure class="ph ${cls}"><img src="assets/img/${id}-1920.jpg" srcset="assets/img/${id}-960.jpg 960w, assets/img/${id}-1920.jpg 1920w" sizes="${sizes}" alt="${esc(p.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${pos ? ` style="object-position:${pos}"` : ''}></figure>`;
+};
+// one quiet attribution line per section, never on top of the image
+const by = (...ids) => {
+  const who = [...new Set(ids.map((id) => `${d.photos[id].by} (${d.photos[id].lic})`))];
+  return `<p class="by">Photo${ids.length > 1 ? 's' : ''}: ${who.join(', ')} · <a href="credits.html">Credits</a></p>`;
 };
 
 const logo = `<span class="logo"><b>HAAS</b><i>TGR · F1 Team</i></span>`;
@@ -91,14 +96,14 @@ const page = (file, title, desc, body, opts = {}) => {
 
 const secHead = (label, title, extra = '') => `<header class="sh"><p class="label" data-reveal>${label}</p><h2 class="display sh__t" data-reveal>${title}</h2>${extra}</header>`;
 
-const pageHero = (label, title, sub, img) => `
-<section class="phero${img ? ' phero--img' : ''}">
-  ${img ? photo(img, { cls: 'phero__bg', eager: true }) : ''}
+const pageHero = (label, title, sub, img, pos = '') => `
+<section class="phero">
   <div class="wrap phero__in">
     <p class="label">${label}</p>
     <h1 class="display phero__t">${title}</h1>
     <p class="phero__sub">${sub}</p>
   </div>
+  ${img ? `<div class="wrap phero__media">${photo(img, { cls: 'phero__ph', eager: true, pos })}${by(img)}</div>` : ''}
 </section>`;
 
 /* ---------- reusable sections ---------- */
@@ -166,10 +171,12 @@ page(
   'TGR Haas F1 Team: drivers, the VF-26 in 3D, the 2026 calendar, results, standings and partners. Unofficial design concept.',
   `
 <section class="hero">
-  ${photo('bear1', { cls: 'hero__bg', eager: true, pos: '40% 50%' })}
-  <div class="wrap hero__in">
-    <p class="label">2026 FIA Formula One World Championship</p>
-    <h1 class="display hero__t"><span>Machined</span><span>to race<i>.</i></span></h1>
+  <div class="hero__view">
+    ${photo('bear1', { cls: 'hero__bg', eager: true, pos: '46% 50%' })}
+    <div class="wrap hero__in">
+      <p class="label">2026 FIA Formula One World Championship</p>
+      <h1 class="display hero__t"><span>Machined</span><span>to race<i>.</i></span></h1>
+    </div>
   </div>
   <div class="hero__bar">
     <a href="season.html" class="hero__cell hero__cell--wide"><span class="label"><span class="live"></span>Next · R${NR.round} ${NR.short}</span><b data-countdown-short>—</b></a>
@@ -177,6 +184,7 @@ page(
     <div class="hero__cell"><span class="label">Points</span><b>${C.pts}</b></div>
     <a href="drivers.html#bearman" class="hero__cell"><span class="label">Leading scorer</span><b>Bearman <small>23</small></b></a>
   </div>
+  ${by('bear1')}
 </section>
 
 <section class="sec" id="now">
@@ -196,7 +204,7 @@ ${champSection('02 · Standings')}
         .map(
           (x, i) => `
       <a class="face" href="drivers.html#${x.id}" data-reveal style="--d:${i * 90}ms">
-        ${photo(x.portrait, { cls: 'face__ph', sizes: '(min-width: 900px) 25vw, 50vw', cap: false })}
+        ${photo(x.portrait, { cls: 'face__ph', sizes: '(min-width: 900px) 25vw, 50vw' })}
         <div class="face__in">
           <p class="label">${x.role}${x.num ? ` · #${x.num}` : ''}</p>
           <h3 class="display"><small>${x.first}</small>${x.last}</h3>
@@ -211,16 +219,12 @@ ${champSection('02 · Standings')}
 </section>
 
 <section class="sec carsec" id="car" data-car-ui>
-  <div class="wrap carsec__head">
-    ${secHead('04 · The machine', 'VF-26', `<p class="sh__sub" data-reveal>${d.car.intro}</p>`)}
-  </div>
-  <div class="stage" data-car3d="teaser" aria-label="Interactive 3D model of the VF-26. Drag to rotate.">
-    <p class="stage__hint">Drag to rotate</p>
-    <noscript>${photo('bear3', { cap: false })}</noscript>
-  </div>
   <div class="wrap">
+    ${secHead('04 · The machine', 'VF-26', `<p class="sh__sub" data-reveal>${d.car.intro}</p>`)}
+    <div class="stage" data-car3d="teaser" aria-label="Interactive 3D model of the VF-26. Drag to rotate."><noscript>${photo('bear3')}</noscript></div>
+    <p class="stage__hint">Drag to rotate</p>
     <div class="kpis">${d.car.kpis.map(([n, u, t]) => `<div data-reveal><p class="display"><span data-count="${n}">${n}</span><small>${u}</small></p><span>${t}</span></div>`).join('')}</div>
-    <div class="carsec__cta" data-reveal>${link('car.html', 'Open the full explorer', 'cta--solid')}<p class="fine">X-ray, exploded view and active aero, in your browser.</p></div>
+    <div class="carsec__cta" data-reveal>${link('car.html', 'Open the full explorer', 'cta--solid')}<p class="fine">Ten systems, an x-ray, and an exploded view down to the engine.</p></div>
   </div>
 </section>
 
@@ -229,7 +233,7 @@ ${champSection('02 · Standings')}
     ${secHead('05 · News', 'From the garage.')}
     <div class="news">
       <a class="news__lead" href="#news" data-reveal>
-        ${photo(d.news[0].photo, { cls: 'news__ph', sizes: '(min-width: 900px) 50vw, 100vw', cap: false })}
+        ${photo(d.news[0].photo, { cls: 'news__ph', sizes: '(min-width: 900px) 50vw, 100vw' })}
         <p class="label">${d.news[0].tag} · ${d.news[0].date}</p>
         <h3>${d.news[0].title}</h3>
       </a>
@@ -238,18 +242,19 @@ ${champSection('02 · Standings')}
         .map((n) => `<li data-reveal><a href="#news"><p class="label">${n.tag} · ${n.date}</p><h3>${n.title}</h3>${arrow}</a></li>`)
         .join('')}</ul>
     </div>
+    ${by(d.news[0].photo)}
   </div>
 </section>
 
-<section class="band">
-  ${photo('bear3', { cls: 'band__bg', pos: '50% 60%' })}
-  <div class="wrap band__in">
-    <p class="label" data-reveal>06 · Who we are</p>
-    <p class="display band__t" data-reveal>The smallest team on the grid. Built across three countries. Racing the biggest names in motorsport since 2016.</p>
-    <div class="band__row" data-reveal>
-      <dl class="facts facts--lg"><div><dt>First race</dt><dd>2016</dd></div><div><dt>Best result</dt><dd>P4</dd></div><div><dt>Bases</dt><dd>3</dd></div></dl>
-      ${link('team.html', 'Our story')}
+<section class="sec about">
+  <div class="wrap about__g">
+    <div>
+      <p class="label" data-reveal>06 · Who we are</p>
+      <p class="display about__t" data-reveal>The smallest team on the grid. Built across three countries. Racing the biggest names in motorsport since 2016.</p>
+      <dl class="facts facts--lg" data-reveal><div><dt>First race</dt><dd>2016</dd></div><div><dt>Best result</dt><dd>P4</dd></div><div><dt>Bases</dt><dd>3</dd></div></dl>
+      <div data-reveal>${link('team.html', 'Our story')}</div>
     </div>
+    <div data-reveal>${photo('bear3', { cls: 'about__ph', sizes: '(min-width: 900px) 50vw, 100vw', pos: '62% 50%' })}${by('bear3')}</div>
   </div>
 </section>
 
@@ -276,7 +281,7 @@ page(
   'drivers.html',
   'Drivers · TGR Haas F1 Team',
   'Oliver Bearman, Rafael Câmara, Ryo Hirakawa and Jack Doohan: the drivers of TGR Haas F1 Team.',
-  pageHero('Drivers', 'Who drives.', 'Four drivers are part of the 2026 story. Here is each of them, with the numbers that matter.', 'bear4') +
+  pageHero('Drivers', 'Who drives.', 'Four drivers are part of the 2026 story. Here is each of them, with the numbers that matter.', 'bear4', '50% 34%') +
     `<nav class="subnav" aria-label="Drivers"><div class="wrap">${d.drivers.map((x) => `<a href="#${x.id}">${x.num ? `<small>${x.num}</small>` : ''}${x.last}</a>`).join('')}</div></nav>` +
     d.drivers
       .map(
@@ -290,7 +295,7 @@ page(
       </div>
       ${x.num ? `<p class="prof__num display" aria-label="Car number ${x.num}">${x.num}</p>` : ''}
     </div>
-    <div class="prof__media" data-reveal>${photo(x.portrait, { cls: 'prof__ph prof__ph--p', sizes: '(min-width: 1000px) 34vw, 100vw' })}${photo(x.photo, { cls: 'prof__ph', sizes: '(min-width: 1000px) 62vw, 100vw' })}</div>${x.photoNote ? `<p class="fine">${x.photoNote}.</p>` : ''}
+    <div class="prof__media" data-reveal>${photo(x.portrait, { cls: 'prof__ph prof__ph--p', sizes: '(min-width: 1000px) 34vw, 100vw' })}${photo(x.photo, { cls: 'prof__ph', sizes: '(min-width: 1000px) 62vw, 100vw' })}</div><div class="prof__by">${by(x.portrait, x.photo)}${x.photoNote ? `<p class="by">${x.photoNote}.</p>` : ''}</div>
     <div class="prof__grid">
       <div>
         <p class="prof__line" data-reveal>${x.line}</p>
@@ -323,39 +328,62 @@ page(
   'Explore the Haas VF-26 in 3D: active aerodynamics, an x-ray of the power unit, an exploded view and the full technical specification.',
   `
 <section class="xp" data-car-ui data-aero-mode="corner">
-  <div class="xp__stage" data-car3d="explorer" aria-label="Interactive 3D model of the VF-26. Drag to rotate.">
-    ${hs.map((h, i) => `<button class="hot${i === 0 ? ' is-on' : ''}" data-hot="${h.id}" aria-label="${esc(h.title)}"><span>${i + 1}</span></button>`).join('')}
-    <noscript>${photo('bear3', { cap: false })}</noscript>
+  <div class="xp__main">
+    <header class="xp__head">
+      <div><p class="label">The machine · 2026</p><h1 class="display xp__t">VF-26</h1></div>
+      <p class="xp__hint">Drag to rotate. Tap a number, or pick a system.</p>
+    </header>
+    <div class="xp__stage" data-car3d="explorer" aria-label="Interactive 3D model of the VF-26. Drag to rotate.">
+      ${hs.map((h, i) => `<button class="hot is-off" data-hot="${h.id}" aria-label="${esc(h.title)}"><span>${i + 1}</span></button>`).join('')}
+      <noscript>${photo('bear3')}</noscript>
+    </div>
+    <div class="xp__dock">
+      <div class="seg" role="group" aria-label="Camera view">
+        <button class="is-on" data-view="hero">3/4</button><button data-view="side">Side</button><button data-view="front">Front</button><button data-view="rear">Rear</button><button data-view="top">Top</button>
+      </div>
+      <div class="seg seg--aero" role="group" aria-label="Active aero mode">
+        <button class="is-on" data-aero="corner">Corner</button><button data-aero="straight">Straight</button>
+      </div>
+      <button class="tog" data-xray aria-pressed="false">X-ray</button>
+      <label class="rng"><span>Explode</span><input type="range" min="0" max="100" value="0" data-explode aria-label="Exploded view amount"><output data-explode-out>Assembled</output></label>
+      <button class="tog tog--plain" data-reset>Reset</button>
+    </div>
   </div>
-  <header class="xp__head">
-    <p class="label">The machine · 2026</p>
-    <h1 class="display xp__t">VF-26</h1>
-    <p class="xp__hint">Drag to rotate · tap a number</p>
-  </header>
-  <aside class="xp__panel" aria-live="polite">
-    ${hs
-      .map(
-        (h, i) => `<article class="xp__card${i === 0 ? ' is-on' : ''}" data-hotcard="${h.id}">
-      <p class="label">${pad(i + 1)} / ${pad(hs.length)}</p>
-      <h2>${h.title}</h2>
-      <p class="xp__stat display">${h.stat[0]}<small>${h.stat[1]}</small></p>
-      <p>${h.text}</p>
-    </article>`
-      )
-      .join('')}
-    <div class="xp__step"><button data-hotprev aria-label="Previous feature">${arrow}</button><button data-hotnext aria-label="Next feature">${arrow}</button></div>
+  <aside class="xp__panel">
+    <div class="xp__cards" aria-live="polite">
+      <article class="xp__card is-on" data-card="intro">
+        <p class="label">Explorer</p>
+        <h2>Take it apart.</h2>
+        <p>An original 3D model at the real car’s overall dimensions, painted in the 2026 colours. Slide Explode halfway to lift the bodywork off, and all the way to pull the power unit apart.</p>
+        <dl class="facts"><div><dt>Systems</dt><dd>${d.systems.length}</dd></div><div><dt>Width</dt><dd>1.9 m</dd></div><div><dt>Wheelbase</dt><dd>3.4 m</dd></div></dl>
+      </article>
+      ${hs
+        .map(
+          (h, i) => `<article class="xp__card" data-card="hot-${h.id}">
+        <p class="label">New for 2026 · ${pad(i + 1)} / ${pad(hs.length)}</p>
+        <h2>${h.title}</h2>
+        <p class="xp__stat display">${h.stat[0]}<small>${h.stat[1]}</small></p>
+        <p>${h.text}</p>
+      </article>`
+        )
+        .join('')}
+      ${d.systems
+        .map(
+          (y, i) => `<article class="xp__card" data-card="sys-${y.id}">
+        <p class="label">System ${pad(i + 1)} / ${pad(d.systems.length)}</p>
+        <h2>${y.name}</h2>
+        <p class="xp__stat display">${y.stat[0]}<small>${y.stat[1]}</small></p>
+        <p>${y.text}</p>
+        <ul class="chips">${y.parts.map((x) => `<li>${x}</li>`).join('')}</ul>
+      </article>`
+        )
+        .join('')}
+    </div>
+    <div class="xp__sysw">
+      <p class="label">Systems</p>
+      <ul class="xp__sys">${d.systems.map((y, i) => `<li><button data-sys="${y.id}" aria-pressed="false"><span>${pad(i + 1)}</span>${y.name}</button></li>`).join('')}</ul>
+    </div>
   </aside>
-  <div class="xp__legend" aria-hidden="true">${d.car.inner.map(([n, t, c]) => `<p><i style="background:${c}"></i><b>${n}</b><span>${t}</span></p>`).join('')}</div>
-  <div class="xp__dock">
-    <div class="seg" role="group" aria-label="Camera view">
-      <button class="is-on" data-view="hero">3/4</button><button data-view="side">Side</button><button data-view="front">Front</button><button data-view="rear">Rear</button><button data-view="top">Top</button>
-    </div>
-    <div class="seg seg--aero" role="group" aria-label="Active aero mode">
-      <button class="is-on" data-aero="corner">Corner mode</button><button data-aero="straight">Straight mode</button>
-    </div>
-    <button class="tog" data-xray aria-pressed="false">X-ray</button>
-    <label class="rng"><span>Explode</span><input type="range" min="0" max="100" value="0" data-explode aria-label="Exploded view amount"></label>
-  </div>
 </section>
 
 <section class="sec">
@@ -401,6 +429,7 @@ page(
 <section class="sec sec--flush">
   <div class="wrap">${secHead('04 · On track', 'The real thing.', `<p class="sh__sub" data-reveal>The VF-26 at the Red Bull Ring, June 2026.</p>`)}</div>
   <div class="gal">${['bear3', 'bear2', 'hira2', 'bear4'].map((id, i) => photo(id, { cls: `gal__i gal__i--${i}`, sizes: '(min-width: 900px) 50vw, 100vw' })).join('')}</div>
+  <div class="wrap">${by('bear3', 'bear2', 'hira2', 'bear4')}</div>
 </section>
 `,
   { three: true }
@@ -430,7 +459,7 @@ page(
   'season.html',
   '2026 Season · TGR Haas F1 Team',
   'The 2026 Formula 1 calendar, every Haas result, the next race countdown and championship standings.',
-  pageHero('2026 season', 'Twenty-three rounds.', `Twenty down, three to go. Seventh in the Constructors’ Championship on ${C.pts} points, three ahead of Audi.`, 'bear2') +
+  pageHero('2026 season', 'Twenty-three rounds.', `Twenty down, three to go. Seventh in the Constructors’ Championship on ${C.pts} points, three ahead of Audi.`, 'bear2', '50% 46%') +
     `
 <section class="sec"><div class="wrap now">${raceBlock(false)}${standBlock()}</div></section>
 
@@ -481,13 +510,13 @@ page(
   'team.html',
   'Team · TGR Haas F1 Team',
   'The story, people and bases behind TGR Haas F1 Team, plus careers.',
-  pageHero('The team', 'Small team.<br>Big swing.', 'Founded by a machine-tool builder from California. Run from North Carolina, Oxfordshire and Maranello. Racing in Formula 1 since 2016.', 'hira1') +
+  pageHero('The team', 'Small team.<br>Big swing.', 'Founded by a machine-tool builder from California. Run from North Carolina, Oxfordshire and Maranello. Racing in Formula 1 since 2016.', 'hira2', '50% 44%') +
     `
 <section class="sec">
   <div class="wrap lead">
     <div><p class="label" data-reveal>01 · Origin</p>
     <p class="lead__t" data-reveal>Gene Haas built a company making machines that make other machines. In 2016 he pointed that precision at the hardest racing series on earth. Eleven seasons on, the team is still here and still independent.</p></div>
-    <div class="lead__ph" data-reveal>${photo('gene', { sizes: '(min-width: 900px) 30vw, 100vw' })}<p class="fine">Gene Haas, Founder &amp; Chairman.</p></div>
+    <div class="lead__ph" data-reveal>${photo('gene', { sizes: '(min-width: 900px) 30vw, 100vw' })}<p class="by">Gene Haas, Founder &amp; Chairman. Photo: ${d.photos.gene.by} (${d.photos.gene.lic}) · <a href="credits.html">Credits</a></p></div>
   </div>
 </section>
 
@@ -537,7 +566,7 @@ page(
   'partners.html',
   'Partners · TGR Haas F1 Team',
   'The partners behind TGR Haas F1 Team, led by title partner Toyota Gazoo Racing.',
-  pageHero('Partners', 'Backed by<br>the best.', 'None of the car’s thousands of parts reach the grid without the companies on this page.', 'bear3') +
+  pageHero('Partners', 'Backed by<br>the best.', 'None of the car’s thousands of parts reach the grid without the companies on this page.') +
     d.partners
       .map(
         (t, i) => `

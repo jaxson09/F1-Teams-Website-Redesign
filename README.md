@@ -10,7 +10,7 @@ Dark, photo-led design with one typeface (Archivo, at two widths), one accent co
 | --- | --- |
 | `index.html` | Photo hero, next-race countdown, last race, championship tables, driver portraits, 3D car teaser, news, store, fan club, partners |
 | `drivers.html` | Profiles with portraits, car photos and 2026 results: Bearman, Câmara, Hirakawa, Doohan |
-| `car.html` | 3D explorer (hotspots, camera views, active-aero modes, x-ray, exploded view), 2025 v 2026 comparison, tech sheet, photo gallery |
+| `car.html` | 3D explorer (ten systems, hotspots, camera views, active-aero modes, x-ray, two-stage exploded view), 2025 v 2026 comparison, tech sheet, photo gallery |
 | `season.html` | Countdown, standings, season stats, every result for both cars, filterable calendar |
 | `team.html` | Origin, history, season-by-season record, leadership, bases, careers |
 | `partners.html` | Partner tiers |
@@ -35,7 +35,14 @@ To publish on GitHub Pages: Settings → Pages → deploy from branch, folder `/
 
 ## The 3D car
 
-The car is an original model generated in code with three.js (lofted body sections, aerofoil wings, lathed tyres). It is built to the real overall dimensions, but it is not a scan or CAD of the real VF-26, and its livery is an approximation without sponsor logos. To use a purchased artist-made model instead, load its `.glb` in `car3d.js` in place of `buildCar()`.
+The car is an original model generated in code with three.js (lofted body sections, aerofoil wings, lathed tyres). It is built to the real overall dimensions, but it is not a scan or CAD of the real VF-26.
+
+- **Livery:** painted to follow the 2026 car as photographed (white over carbon, red shoulder stripe, red airbox, white halo). Team and partner names are set in the site typeface in their real positions; they are not the official logo artwork.
+- **Systems:** every assembly is a group tagged with one of ten systems (power unit, hybrid system, fuel, cooling, gearbox, suspension, brakes, bodywork, survival cell, wheels). Picking a system ghosts everything else.
+- **Exploded view:** two stages. The first half of the slider lifts the bodywork and assemblies apart; the second half pulls the power unit and gearbox apart.
+- **Internals are representative, not Ferrari's design.** The engine, hybrid parts and gearbox show the right components in roughly the right places.
+
+To use a purchased artist-made model instead, load its `.glb` in `car3d.js` in place of `buildCar()`.
 
 ## Photos
 
