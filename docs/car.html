@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VF-26 · TGR Haas F1 Team</title>
+<meta name="description" content="Explore the Haas VF-26 in 3D: active aerodynamics, an x-ray of the power unit, an exploded view and the full technical specification.">
+<meta name="theme-color" content="#08080a">
+<meta property="og:title" content="VF-26 · TGR Haas F1 Team">
+<meta property="og:description" content="Explore the Haas VF-26 in 3D: active aerodynamics, an x-ray of the power unit, an exploded view and the full technical specification.">
+<meta property="og:image" content="assets/img/bear1-1920.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+<script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
+<link rel="modulepreload" href="assets/vendor/three.module.min.js">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body data-page="car.html">
+<a class="skip" href="#main">Skip to content</a>
+<div class="prog" aria-hidden="true"></div>
+<header class="hdr">
+  <a class="hdr__logo" href="index.html" aria-label="TGR Haas F1 Team, home"><span class="logo"><b>HAAS</b><i>TGR · F1 Team</i></span></a>
+  <nav class="hdr__nav" aria-label="Main"><a href="drivers.html">Drivers</a><a href="car.html" aria-current="page">VF-26</a><a href="season.html">Season</a><a href="team.html">Team</a><a href="partners.html">Partners</a></nav>
+  <a class="hdr__race" href="season.html"><span class="live"></span><span>R21 Las Vegas</span><b data-countdown-short></b></a>
+  <button class="hdr__menu" aria-expanded="false" aria-controls="menu" aria-label="Menu"><i></i><i></i></button>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Mobile"><a href="index.html" style="--i:0"><small>01</small>Home</a><a href="drivers.html" style="--i:1"><small>02</small>Drivers</a><a href="car.html" style="--i:2" aria-current="page"><small>03</small>VF-26</a><a href="season.html" style="--i:3"><small>04</small>Season</a><a href="team.html" style="--i:4"><small>05</small>Team</a><a href="partners.html" style="--i:5"><small>06</small>Partners</a></nav>
+  <p class="menu__foot"><span class="live"></span> Round 21 · Las Vegas Grand Prix · Sat 21 Nov · 20:00 PST</p>
+</div>
+<main id="main">
+<section class="xp" data-car-ui data-aero-mode="corner">
+  <div class="xp__main">
+    <header class="xp__head">
+      <div><p class="label">The machine · 2026</p><h1 class="display xp__t">VF-26</h1></div>
+      <p class="xp__hint">Drag to rotate. Tap a number, or pick a system.</p>
+    </header>
+    <div class="xp__stage" data-car3d="explorer" aria-label="Interactive 3D model of the VF-26. Drag to rotate.">
+      <button class="hot is-off" data-hot="fw" aria-label="Active front wing"><span>1</span></button><button class="hot is-off" data-hot="ck" aria-label="Survival cell"><span>2</span></button><button class="hot is-off" data-hot="pu" aria-label="Ferrari 067/6 power unit"><span>3</span></button><button class="hot is-off" data-hot="ty" aria-label="Smaller tyres"><span>4</span></button><button class="hot is-off" data-hot="fl" aria-label="Flatter floor"><span>5</span></button><button class="hot is-off" data-hot="rw" aria-label="Active rear wing"><span>6</span></button>
+      <noscript><figure class="ph "><img src="assets/img/bear3-1920.jpg" srcset="assets/img/bear3-960.jpg 960w, assets/img/bear3-1920.jpg 1920w" sizes="100vw" alt="Side view of Oliver Bearman’s Haas VF-26 on the kerb" loading="lazy" decoding="async"></figure></noscript>
+    </div>
+    <div class="xp__dock">
+      <div class="seg" role="group" aria-label="Camera view">
+        <button class="is-on" data-view="hero">3/4</button><button data-view="side">Side</button><button data-view="front">Front</button><button data-view="rear">Rear</button><button data-view="top">Top</button>
+      </div>
+      <div class="seg seg--aero" role="group" aria-label="Active aero mode">
+        <button class="is-on" data-aero="corner">Corner</button><button data-aero="straight">Straight</button>
+      </div>
+      <button class="tog" data-xray aria-pressed="false">X-ray</button>
+      <label class="rng"><span>Explode</span><input type="range" min="0" max="100" value="0" data-explode aria-label="Exploded view amount"><output data-explode-out>Assembled</output></label>
+      <button class="tog tog--plain" data-reset>Reset</button>
+    </div>
+  </div>
+  <aside class="xp__panel">
+    <div class="xp__cards" aria-live="polite">
+      <article class="xp__card is-on" data-card="intro">
+        <p class="label">Explorer</p>
+        <h2>Take it apart.</h2>
+        <p>An original 3D model at the real car’s overall dimensions, painted in the 2026 colours. Slide Explode halfway to lift the bodywork off, and all the way to pull the power unit apart.</p>
+        <dl class="facts"><div><dt>Systems</dt><dd>10</dd></div><div><dt>Width</dt><dd>1.9 m</dd></div><div><dt>Wheelbase</dt><dd>3.4 m</dd></div></dl>
+      </article>
+      <article class="xp__card" data-card="hot-fw">
+        <p class="label">New for 2026 · 01 / 06</p>
+        <h2>Active front wing</h2>
+        <p class="xp__stat display">2<small>movable flaps per side</small></p>
+        <p>In Straight mode the two upper flaps drop their trailing edges to shed drag, then snap back for the corner. On the Haas the actuator is thought to sit under the nose rather than in each wing half. Press Straight and watch them move.</p>
+      </article><article class="xp__card" data-card="hot-ck">
+        <p class="label">New for 2026 · 02 / 06</p>
+        <h2>Survival cell</h2>
+        <p class="xp__stat display">768<small>kg minimum, with driver</small></p>
+        <p>Tougher 2026 crash tests, a stronger roll hoop and a two-stage nose structure, in a car 30 kg lighter than last year.</p>
+      </article><article class="xp__card" data-card="hot-pu">
+        <p class="label">New for 2026 · 03 / 06</p>
+        <h2>Ferrari 067/6 power unit</h2>
+        <p class="xp__stat display">350<small>kW from the MGU-K</small></p>
+        <p>A 1.6-litre turbo V6 hybrid. The MGU-H is gone, and the electric motor delivers nearly three times last year’s power. Turn on X-ray to see it.</p>
+      </article><article class="xp__card" data-card="hot-ty">
+        <p class="label">New for 2026 · 04 / 06</p>
+        <h2>Smaller tyres</h2>
+        <p class="xp__stat display">710<small>mm rear tyre diameter</small></p>
+        <p>Still on 18-inch rims, but smaller all round: fronts are 705 mm tall and 280 mm wide, rears 710 mm tall and 375 mm wide. The model’s tyres are built to those sizes.</p>
+      </article><article class="xp__card" data-card="hot-fl">
+        <p class="label">New for 2026 · 05 / 06</p>
+        <h2>Flatter floor</h2>
+        <p class="xp__stat display">−30<small>% downforce vs 2025</small></p>
+        <p>The long ground-effect tunnels are out. A flatter floor and a larger diffuser make the car less sensitive to ride height.</p>
+      </article><article class="xp__card" data-card="hot-rw">
+        <p class="label">New for 2026 · 06 / 06</p>
+        <h2>Active rear wing</h2>
+        <p class="xp__stat display">3<small>elements, two of them movable</small></p>
+        <p>The two upper elements hinge open in Straight mode, lifting their leading edges so air passes through the gaps. It works in step with the front wing, on every designated straight, for every car.</p>
+      </article>
+      <article class="xp__card" data-card="aero-corner">
+        <p class="label">Active aero</p>
+        <h2>Corner mode</h2>
+        <p class="xp__stat display">Closed<small>flaps at full angle</small></p>
+        <p>The default. Every flap sits at its steep, high-downforce angle for braking and turning. The car returns here by itself the moment the driver brakes or lifts.</p>
+      </article><article class="xp__card" data-card="aero-straight">
+        <p class="label">Active aero</p>
+        <h2>Straight mode</h2>
+        <p class="xp__stat display">Open<small>front and rear together</small></p>
+        <p>The driver opens both wings in a marked activation zone. At the front, the two upper flaps drop flat. At the rear, the two upper elements hinge open and gaps appear between them. Drag falls, so the battery’s energy carries the car further.</p>
+      </article>
+      <article class="xp__card" data-card="sys-pu">
+        <p class="label">System 01 / 10</p>
+        <h2>Power unit</h2>
+        <p class="xp__stat display">1.6<small>litre V6 turbo</small></p>
+        <p>A 90° V6 with a single turbocharger. Two banks of three cylinders, a carbon intake plenum between them, and exhaust primaries that sweep back into the turbine. Push the explode slider past halfway to pull it apart.</p>
+        <ul class="chips"><li>Crankcase</li><li>Cylinder banks</li><li>Cam covers</li><li>Intake plenum</li><li>Exhaust primaries</li><li>Turbocharger</li><li>Oil tank</li></ul>
+      </article><article class="xp__card" data-card="sys-ers">
+        <p class="label">System 02 / 10</p>
+        <h2>Hybrid system</h2>
+        <p class="xp__stat display">350<small>kW electric motor</small></p>
+        <p>The MGU-K sits low beside the engine and both drives the car and harvests energy under braking. It feeds a battery under the fuel cell through high-voltage cables, managed by the control electronics.</p>
+        <ul class="chips"><li>MGU-K</li><li>Energy store</li><li>Control electronics</li><li>High-voltage cables</li></ul>
+      </article><article class="xp__card" data-card="sys-fuel">
+        <p class="label">System 03 / 10</p>
+        <h2>Fuel system</h2>
+        <p class="xp__stat display">100<small>% sustainable fuel</small></p>
+        <p>A flexible, puncture-resistant fuel cell sits between the driver’s seat and the engine, low and central to keep the weight balance steady as it empties.</p>
+        <ul class="chips"><li>Fuel cell</li><li>Filler</li><li>Lift pump</li></ul>
+      </article><article class="xp__card" data-card="sys-cool">
+        <p class="label">System 04 / 10</p>
+        <h2>Cooling</h2>
+        <p class="xp__stat display">2<small>sidepod radiator packs</small></p>
+        <p>Angled radiators in each sidepod cool the engine water and oil. The right-hand pod also carries the charge-air cooler that chills the turbo’s compressed air before it reaches the plenum.</p>
+        <ul class="chips"><li>Radiators</li><li>Charge-air cooler</li><li>Coolant lines</li></ul>
+      </article><article class="xp__card" data-card="sys-gbx">
+        <p class="label">System 05 / 10</p>
+        <h2>Gearbox and drive</h2>
+        <p class="xp__stat display">8<small>forward gears</small></p>
+        <p>A carbon gearbox casing bolts to the back of the engine and carries the rear suspension, the rear crash structure and the rain light. Inside: the gear cluster, the differential and the driveshafts.</p>
+        <ul class="chips"><li>Casing</li><li>Gear cluster</li><li>Clutch</li><li>Differential</li><li>Driveshafts</li><li>Crash structure</li></ul>
+      </article><article class="xp__card" data-card="sys-sus">
+        <p class="label">System 06 / 10</p>
+        <h2>Suspension and steering</h2>
+        <p class="xp__stat display">4<small>corners, double wishbones</small></p>
+        <p>Carbon wishbones locate each wheel. At the rear the car uses push-rods, according to technical analysis of the launch images, working dampers on top of the gearbox. The steering rack sits at the front bulkhead.</p>
+        <ul class="chips"><li>Wishbones</li><li>Push and pull rods</li><li>Uprights</li><li>Dampers</li><li>Steering rack and column</li></ul>
+      </article><article class="xp__card" data-card="sys-brk">
+        <p class="label">System 07 / 10</p>
+        <h2>Brakes</h2>
+        <p class="xp__stat display">6<small>piston calipers</small></p>
+        <p>Carbon discs and pads that work at up to around 1,000°C, hidden inside the wheels behind a carbon shroud. The rear brakes share the job with the MGU-K’s energy harvesting.</p>
+        <ul class="chips"><li>Carbon discs</li><li>Calipers</li><li>Brake shrouds</li></ul>
+      </article><article class="xp__card" data-card="sys-aero">
+        <p class="label">System 08 / 10</p>
+        <h2>Bodywork and aero</h2>
+        <p class="xp__stat display">2<small>active wings</small></p>
+        <p>Front wing, rear wing, floor, sidepods and engine cover. For 2026 the floor is flatter, the car is narrower, and both wings open on the straights.</p>
+        <ul class="chips"><li>Front wing</li><li>Rear wing</li><li>Floor and diffuser</li><li>Sidepods</li><li>Engine cover</li></ul>
+      </article><article class="xp__card" data-card="sys-cell">
+        <p class="label">System 09 / 10</p>
+        <h2>Survival cell</h2>
+        <p class="xp__stat display">768<small>kg minimum, with driver</small></p>
+        <p>The carbon monocoque the driver sits in, with the nose crash structure ahead of it and the halo above. Everything else on the car bolts to it.</p>
+        <ul class="chips"><li>Monocoque</li><li>Nose structure</li><li>Halo</li><li>Seat</li></ul>
+      </article><article class="xp__card" data-card="sys-whl">
+        <p class="label">System 10 / 10</p>
+        <h2>Wheels and tyres</h2>
+        <p class="xp__stat display">18<small>inch wheels</small></p>
+        <p>Open spoked wheels with a single centre nut. The 2026 Pirellis are 705 mm tall and 280 mm wide at the front, 710 mm and 375 mm at the rear.</p>
+        <ul class="chips"><li>Tyres</li><li>Wheels</li><li>Wheel nuts</li></ul>
+      </article>
+    </div>
+    <div class="xp__sysw">
+      <p class="label">Systems</p>
+      <ul class="xp__sys"><li><button data-sys="pu" aria-pressed="false"><span>01</span>Power unit</button></li><li><button data-sys="ers" aria-pressed="false"><span>02</span>Hybrid system</button></li><li><button data-sys="fuel" aria-pressed="false"><span>03</span>Fuel system</button></li><li><button data-sys="cool" aria-pressed="false"><span>04</span>Cooling</button></li><li><button data-sys="gbx" aria-pressed="false"><span>05</span>Gearbox and drive</button></li><li><button data-sys="sus" aria-pressed="false"><span>06</span>Suspension and steering</button></li><li><button data-sys="brk" aria-pressed="false"><span>07</span>Brakes</button></li><li><button data-sys="aero" aria-pressed="false"><span>08</span>Bodywork and aero</button></li><li><button data-sys="cell" aria-pressed="false"><span>09</span>Survival cell</button></li><li><button data-sys="whl" aria-pressed="false"><span>10</span>Wheels and tyres</button></li></ul>
+    </div>
+  </aside>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>01 · Active aero</p><h2 class="display sh__t" data-reveal>Two cars in one.</h2><p class="sh__sub" data-reveal>DRS is gone. In 2026 every car changes shape on every straight: both wings open to shed drag, then close again for the corner.</p></header>
+    <div class="modes">
+      <div class="mode" data-reveal><p class="label">High downforce</p><h3 class="display">Corner mode</h3><p>Flaps closed. Maximum downforce for braking and turning.</p>
+        <ul class="bars bars--lg"><li><span>Drag</span><i><u style="--w:100%"></u></i><b>100</b></li><li><span>Downforce</span><i><u style="--w:100%"></u></i><b>100</b></li></ul></div><div class="mode" data-reveal><p class="label">Low drag</p><h3 class="display">Straight mode</h3><p>Flaps open. Drag falls sharply so the battery’s energy goes further.</p>
+        <ul class="bars bars--lg"><li><span>Drag</span><i><u style="--w:45%"></u></i><b>45</b></li><li><span>Downforce</span><i><u style="--w:70%"></u></i><b>70</b></li></ul></div>
+    </div>
+    <p class="fine" data-reveal>Bars are an illustrative index (corner mode = 100), not measured team data.</p>
+    <ul class="moves">
+      <li data-reveal><p class="label">Front wing</p><h3>Two flaps drop</h3><p>The two upper flaps on each side rotate nose-up so their trailing edges fall flat. Analysis of the launch car suggests Haas drives them from one actuator under the nose.</p></li>
+      <li data-reveal><p class="label">Rear wing</p><h3>Two elements open</h3><p>The upper two of the three elements hinge so their leading edges lift, opening gaps that let air straight through.</p></li>
+      <li data-reveal><p class="label">Who decides</p><h3>The driver, then the car</h3><p>Straight mode is switched on by hand in marked zones. Braking or lifting puts the car back in corner mode by itself.</p></li>
+    </ul>
+    <p class="fine" data-reveal>Haas has not published its flap angles or actuator layout. The motion in the 3D model follows the 2026 rules and published analysis, not team data.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>02 · New rules</p><h2 class="display sh__t" data-reveal>2025 against 2026.</h2></header>
+    <div class="cmp" role="table" aria-label="2025 and 2026 regulations compared">
+      <div class="cmp__r cmp__r--h" role="row"><span role="columnheader">Measure</span><span role="columnheader">2025</span><span role="columnheader">2026</span><span role="columnheader">Change</span></div>
+      <div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Minimum weight<em>30 kg lighter</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>800<small>kg</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:96%"></u></i><b>768<small>kg</small></b></span>
+        <span role="cell" class="cmp__d">−4%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Width<em>100 mm narrower</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>2000<small>mm</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:95%"></u></i><b>1900<small>mm</small></b></span>
+        <span role="cell" class="cmp__d">−5%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Maximum wheelbase<em>200 mm shorter</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>3600<small>mm</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:94.44444444444444%"></u></i><b>3400<small>mm</small></b></span>
+        <span role="cell" class="cmp__d">−6%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">MGU-K power<em>Almost 3× the electric power</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:34.285714285714285%"></u></i><b>120<small>kW</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:100%"></u></i><b>350<small>kW</small></b></span>
+        <span role="cell" class="cmp__d">+192%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Combustion power<em>Approximate. The V6 does less of the work</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>550<small>kW</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:72.72727272727273%"></u></i><b>400<small>kW</small></b></span>
+        <span role="cell" class="cmp__d">−27%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Front tyre width<em>25 mm narrower</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>305<small>mm</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:91.80327868852459%"></u></i><b>280<small>mm</small></b></span>
+        <span role="cell" class="cmp__d">−8%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Rear tyre width<em>30 mm narrower</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>405<small>mm</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:92.5925925925926%"></u></i><b>375<small>mm</small></b></span>
+        <span role="cell" class="cmp__d">−7%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Front tyre diameter<em>15 mm smaller</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>720<small>mm</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:97.91666666666666%"></u></i><b>705<small>mm</small></b></span>
+        <span role="cell" class="cmp__d">−2%</span></div><div class="cmp__r" role="row" data-reveal><span role="cell" class="cmp__l">Rear tyre diameter<em>10 mm smaller</em></span>
+        <span role="cell" class="cmp__v"><i><u style="--w:100%"></u></i><b>720<small>mm</small></b></span>
+        <span role="cell" class="cmp__v cmp__v--new"><i><u style="--w:98.61111111111111%"></u></i><b>710<small>mm</small></b></span>
+        <span role="cell" class="cmp__d">−1%</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap spec">
+    <header class="sh"><p class="label" data-reveal>03 · Specification</p><h2 class="display sh__t" data-reveal>Tech sheet.</h2></header>
+    <dl class="spec__l"><div data-reveal><dt>Chassis</dt><dd>Carbon-fibre composite monocoque</dd></div><div data-reveal><dt>Power unit</dt><dd>Ferrari 067/6, 1.6 L V6 turbo hybrid</dd></div><div data-reveal><dt>Energy recovery</dt><dd>MGU-K, up to 350 kW</dd></div><div data-reveal><dt>Transmission</dt><dd>Ferrari 8-speed, rear-mounted</dd></div><div data-reveal><dt>Aerodynamics</dt><dd>Active front and rear wings</dd></div><div data-reveal><dt>Minimum weight</dt><dd>768 kg including driver</dd></div><div data-reveal><dt>Dimensions</dt><dd>1900 mm wide, wheelbase up to 3400 mm</dd></div><div data-reveal><dt>Tyres</dt><dd>Pirelli, 18-inch</dd></div><div data-reveal><dt>Fuel</dt><dd>100% advanced sustainable fuel</dd></div><div data-reveal><dt>Launched</dt><dd>19 January 2026</dd></div></dl>
+  </div>
+</section>
+
+<section class="sec sec--flush">
+  <div class="wrap"><header class="sh"><p class="label" data-reveal>04 · On track</p><h2 class="display sh__t" data-reveal>The real thing.</h2><p class="sh__sub" data-reveal>The VF-26 at the Red Bull Ring, June 2026.</p></header></div>
+  <div class="gal"><figure class="ph gal__i gal__i--0"><img src="assets/img/bear3-1920.jpg" srcset="assets/img/bear3-960.jpg 960w, assets/img/bear3-1920.jpg 1920w" sizes="(min-width: 900px) 50vw, 100vw" alt="Side view of Oliver Bearman’s Haas VF-26 on the kerb" loading="lazy" decoding="async"></figure><figure class="ph gal__i gal__i--1"><img src="assets/img/bear2-1920.jpg" srcset="assets/img/bear2-960.jpg 960w, assets/img/bear2-1920.jpg 1920w" sizes="(min-width: 900px) 50vw, 100vw" alt="Oliver Bearman’s Haas VF-26 rounding a corner at the Red Bull Ring" loading="lazy" decoding="async"></figure><figure class="ph gal__i gal__i--2"><img src="assets/img/hira2-1920.jpg" srcset="assets/img/hira2-960.jpg 960w, assets/img/hira2-1920.jpg 1920w" sizes="(min-width: 900px) 50vw, 100vw" alt="Ryo Hirakawa’s Haas VF-26 turning in at the Red Bull Ring" loading="lazy" decoding="async"></figure><figure class="ph gal__i gal__i--3"><img src="assets/img/bear4-1920.jpg" srcset="assets/img/bear4-960.jpg 960w, assets/img/bear4-1920.jpg 1920w" sizes="(min-width: 900px) 50vw, 100vw" alt="Oliver Bearman’s Haas VF-26 seen head-on through a corner" loading="lazy" decoding="async"></figure></div>
+  <div class="wrap"><p class="by">Photos: Lukas Raich (CC BY-SA 4.0) · <a href="credits.html">Credits</a></p></div>
+</section>
+</main>
+<footer class="ftr">
+  <div class="wrap ftr__top">
+    <div class="ftr__brand"><span class="logo"><b>HAAS</b><i>TGR · F1 Team</i></span><p>Kannapolis · Banbury · Maranello</p></div>
+    <form class="nl" data-newsletter novalidate>
+      <label for="nl-email">Race previews and results, straight to your inbox</label>
+      <div class="nl__row"><input id="nl-email" type="email" name="email" placeholder="Email address" autocomplete="email" required><button type="submit">Subscribe <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+      <p class="nl__msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="wrap ftr__cols">
+    <div><h2>Team</h2><a href="drivers.html">Drivers</a><a href="car.html">VF-26</a><a href="season.html">Season</a><a href="team.html">Team</a><a href="partners.html">Partners</a></div>
+    <div><h2>More</h2><a href="index.html#news">News</a><a href="index.html#store">Store</a><a href="index.html#store">Fan club</a><a href="team.html#careers">Careers</a></div>
+    <div><h2>Follow</h2><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+    <div><h2>Legal</h2><a href="#">Privacy</a><a href="#">Cookies</a><a href="credits.html">Photo credits</a></div>
+  </div>
+  <div class="wrap ftr__legal">
+    <p><strong>Unofficial design concept.</strong> A fan-made redesign exercise, not affiliated with or endorsed by Haas F1 Team, Formula 1 or any partner named. Trademarks belong to their owners. The 3D car is an original model, not team data.</p>
+  </div>
+</footer>
+<script src="assets/main.js" defer></script>
+<script type="module" src="assets/car3d.js"></script>
+</body>
+</html>

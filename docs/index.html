@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TGR Haas F1 Team</title>
+<meta name="description" content="TGR Haas F1 Team: drivers, the VF-26 in 3D, the 2026 calendar, results, standings and partners. Unofficial design concept.">
+<meta name="theme-color" content="#08080a">
+<meta property="og:title" content="TGR Haas F1 Team">
+<meta property="og:description" content="TGR Haas F1 Team: drivers, the VF-26 in 3D, the 2026 calendar, results, standings and partners. Unofficial design concept.">
+<meta property="og:image" content="assets/img/bear1-1920.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+<script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
+<link rel="modulepreload" href="assets/vendor/three.module.min.js">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body data-page="index.html">
+<a class="skip" href="#main">Skip to content</a>
+<div class="prog" aria-hidden="true"></div>
+<header class="hdr">
+  <a class="hdr__logo" href="index.html" aria-label="TGR Haas F1 Team, home"><span class="logo"><b>HAAS</b><i>TGR · F1 Team</i></span></a>
+  <nav class="hdr__nav" aria-label="Main"><a href="drivers.html">Drivers</a><a href="car.html">VF-26</a><a href="season.html">Season</a><a href="team.html">Team</a><a href="partners.html">Partners</a></nav>
+  <a class="hdr__race" href="season.html"><span class="live"></span><span>R21 Las Vegas</span><b data-countdown-short></b></a>
+  <button class="hdr__menu" aria-expanded="false" aria-controls="menu" aria-label="Menu"><i></i><i></i></button>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Mobile"><a href="index.html" style="--i:0" aria-current="page"><small>01</small>Home</a><a href="drivers.html" style="--i:1"><small>02</small>Drivers</a><a href="car.html" style="--i:2"><small>03</small>VF-26</a><a href="season.html" style="--i:3"><small>04</small>Season</a><a href="team.html" style="--i:4"><small>05</small>Team</a><a href="partners.html" style="--i:5"><small>06</small>Partners</a></nav>
+  <p class="menu__foot"><span class="live"></span> Round 21 · Las Vegas Grand Prix · Sat 21 Nov · 20:00 PST</p>
+</div>
+<main id="main">
+<section class="hero">
+  <div class="hero__view">
+    <figure class="ph hero__bg"><img src="assets/img/bear1-1920.jpg" srcset="assets/img/bear1-960.jpg 960w, assets/img/bear1-1920.jpg 1920w" sizes="100vw" alt="Oliver Bearman’s Haas VF-26 at speed at the Red Bull Ring" fetchpriority="high" decoding="async" style="object-position:46% 50%"></figure>
+    <div class="wrap hero__in">
+      <p class="label">2026 FIA Formula One World Championship</p>
+      <h1 class="display hero__t"><span>Machined</span><span>to race<i>.</i></span></h1>
+    </div>
+  </div>
+  <div class="hero__bar">
+    <a href="season.html" class="hero__cell hero__cell--wide"><span class="label"><span class="live"></span>Next · R21 Las Vegas</span><b data-countdown-short>—</b></a>
+    <div class="hero__cell"><span class="label">Constructors</span><b>P7</b></div>
+    <div class="hero__cell"><span class="label">Points</span><b>31</b></div>
+    <a href="drivers.html#bearman" class="hero__cell"><span class="label">Leading scorer</span><b>Bearman <small>23</small></b></a>
+  </div>
+  <p class="by">Photo: Lukas Raich (CC BY-SA 4.0) · <a href="credits.html">Credits</a></p>
+</section>
+
+<section class="sec" id="now">
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>01 · This week</p><h2 class="display sh__t" data-reveal>Three to go.<br>Seventh to defend.</h2></header>
+    <div class="now">
+<div class="race" data-reveal>
+  <p class="label"><span class="live"></span>Next race · Round 21 of 23</p>
+  <h3 class="display race__t">Las Vegas<small>Grand Prix</small></h3>
+  <p class="race__when"><span data-localtime="2026-11-22T04:00:00Z">Sat 21 Nov · 20:00 PST</span> · Las Vegas Strip Circuit</p>
+  <div class="cd" data-countdown="2026-11-22T04:00:00Z" role="timer" aria-label="Countdown to lights out"><div><b data-u="d">00</b><span>Days</span></div><div><b data-u="h">00</b><span>Hours</span></div><div><b data-u="m">00</b><span>Min</span></div><div><b data-u="s">00</b><span>Sec</span></div></div>
+  <dl class="facts"><div><dt>Length</dt><dd>6.201 km</dd></div><div><dt>Laps</dt><dd>50</dd></div><div><dt>Corners</dt><dd>17</dd></div><div><dt>Type</dt><dd>Street · night</dd></div></dl>
+  <a class="cta " href="season.html"><span>Calendar and results</span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+</div>
+<div class="stand" data-reveal>
+  <p class="label">Constructors’ Championship</p>
+  <p class="stand__pos display"><small>P</small>7</p>
+  <p class="stand__pts"><b>31</b> points · Audi 3 behind in eighth</p>
+  <ul class="bars"><li><span>Oliver Bearman<em>P13</em></span><i><u style="--w:74.19354838709677%"></u></i><b>23</b></li><li><span>Esteban Ocon<em>Rounds 1–18</em></span><i><u style="--w:22.58064516129032%"></u></i><b>7</b></li><li><span>Ryo Hirakawa<em>Round 19</em></span><i><u style="--w:3.225806451612903%"></u></i><b>1</b></li><li><span>Rafael Câmara<em>Round 20</em></span><i><u style="--w:0%"></u></i><b>0</b></li></ul>
+  <p class="fine">After Round 20 · São Paulo</p>
+</div></div>
+    <div class="last" data-reveal><p class="label">Last race · Round 20 · 8 Nov</p><h3 class="display">São Paulo Grand Prix</h3><ul><li><b>P17</b><span>Oliver Bearman</span></li><li><b>P20</b><span>Rafael Câmara</span></li></ul><p>Câmara reached the flag on his Grand Prix debut.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="championship">
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>02 · Standings</p><h2 class="display sh__t" data-reveal>Where we stand.</h2><p class="sh__sub" data-reveal>Seventh, three points clear of Audi, with 69-point Alpine out of reach. Three races decide it.</p></header>
+    <div class="champs">
+      <div><p class="label">Constructors · After Round 20 · São Paulo</p><ol class="champ"><li class="" data-reveal><span>01</span><b>Mercedes</b><i><u style="--w:100%"></u></i><em>652</em></li><li class="" data-reveal><span>02</span><b>Ferrari</b><i><u style="--w:78.22085889570552%"></u></i><em>510</em></li><li class="" data-reveal><span>03</span><b>Red Bull</b><i><u style="--w:63.65030674846626%"></u></i><em>415</em></li><li class="" data-reveal><span>04</span><b>McLaren</b><i><u style="--w:61.04294478527608%"></u></i><em>398</em></li><li class="" data-reveal><span>05</span><b>Racing Bulls</b><i><u style="--w:17.484662576687114%"></u></i><em>114</em></li><li class="" data-reveal><span>06</span><b>Alpine</b><i><u style="--w:10.582822085889571%"></u></i><em>69</em></li><li class="is-us" data-reveal><span>07</span><b>Haas</b><i><u style="--w:4.754601226993866%"></u></i><em>31</em></li><li class="" data-reveal><span>08</span><b>Audi</b><i><u style="--w:4.294478527607362%"></u></i><em>28</em></li><li class="" data-reveal><span>09</span><b>Williams</b><i><u style="--w:1.8404907975460123%"></u></i><em>12</em></li><li class="" data-reveal><span>10</span><b>Aston Martin</b><i><u style="--w:1.0736196319018405%"></u></i><em>7</em></li><li class="" data-reveal><span>11</span><b>Cadillac</b><i><u style="--w:0.4%"></u></i><em>0</em></li></ol></div>
+      <div><p class="label">Drivers · leaders and the midfield</p><ol class="champ champ--d"><li class="" data-reveal><span>01</span><b>Kimi Antonelli<small>Mercedes</small></b><em>390</em></li><li class="" data-reveal><span>02</span><b>Max Verstappen<small>Red Bull</small></b><em>279</em></li><li class="" data-reveal><span>03</span><b>George Russell<small>Mercedes</small></b><em>262</em></li><li class="gap" aria-hidden="true">···</li><li class="" data-reveal><span>10</span><b>Pierre Gasly<small>Alpine</small></b><em>42</em></li><li class="" data-reveal><span>11</span><b>Arvid Lindblad<small>Racing Bulls</small></b><em>38</em></li><li class="" data-reveal><span>12</span><b>Franco Colapinto<small>Alpine</small></b><em>27</em></li><li class="is-us" data-reveal><span>13</span><b>Oliver Bearman<small>Haas</small></b><em>23</em></li><li class="" data-reveal><span>14</span><b>Gabriel Bortoleto<small>Audi</small></b><em>14</em></li><li class="" data-reveal><span>15</span><b>Nico Hülkenberg<small>Audi</small></b><em>14</em></li><li class="is-us" data-reveal><span>16</span><b>Esteban Ocon<small>Haas</small></b><em>7</em></li><li class="gap" aria-hidden="true">···</li><li class="is-us" data-reveal><span>21</span><b>Ryo Hirakawa<small>Haas</small></b><em>1</em></li><li class="gap" aria-hidden="true">···</li><li class="is-us" data-reveal><span>25</span><b>Rafael Câmara<small>Haas</small></b><em>0</em></li></ol></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--tight" id="reel">
+  <div class="wrap"><header class="sh"><p class="label" data-reveal>The season, round by round</p><h2 class="display sh__t" data-reveal>Twenty down.</h2></header></div>
+  
+<div class="reel" data-reel>
+  <div class="reel__bar"><p class="label">All 23 rounds · drag or scroll</p><div class="reel__nav"><button data-reel-prev aria-label="Earlier rounds"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button data-reel-next aria-label="Later rounds"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div></div>
+  <ol class="reel__track" tabindex="0" aria-label="2026 rounds">
+    <li class="reel__c is-pts">
+      <p class="label">Round 01 · 8 Mar</p>
+      <h3 class="display">Australia</h3>
+      <p class="reel__v">Albert Park, Melbourne</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--pts">P7</dd></div><div><dt>Ocon</dt><dd class="r r--out">P11</dd></div></dl>
+      <p class="reel__p"><b>+6</b> pts</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 02 · 15 Mar</p>
+      <h3 class="display">China</h3>
+      <p class="reel__v">Shanghai International Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--pts">P5</dd></div><div><dt>Ocon</dt><dd class="r r--out">P14</dd></div></dl>
+      <p class="reel__p"><b>+11</b> pts</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 03 · 29 Mar</p>
+      <h3 class="display">Japan</h3>
+      <p class="reel__v">Suzuka Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--ret">Ret</dd></div><div><dt>Ocon</dt><dd class="r r--pts">P10</dd></div></dl>
+      <p class="reel__p"><b>+1</b> pts</p>
+    </li><li class="reel__c">
+      <p class="label">Round 04 · 3 May</p>
+      <h3 class="display">Miami</h3>
+      <p class="reel__v">Miami International Autodrome</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P11</dd></div><div><dt>Ocon</dt><dd class="r r--out">P13</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 05 · 24 May</p>
+      <h3 class="display">Canada</h3>
+      <p class="reel__v">Circuit Gilles Villeneuve, Montréal</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--pts">P10</dd></div><div><dt>Ocon</dt><dd class="r r--out">P14</dd></div></dl>
+      <p class="reel__p"><b>+1</b> pts</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 06 · 7 Jun</p>
+      <h3 class="display">Monaco</h3>
+      <p class="reel__v">Circuit de Monaco</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--ret">Ret</dd></div><div><dt>Ocon</dt><dd class="r r--pts">P9</dd></div></dl>
+      <p class="reel__p"><b>+2</b> pts</p>
+    </li><li class="reel__c">
+      <p class="label">Round 07 · 14 Jun</p>
+      <h3 class="display">Barcelona-Catalunya</h3>
+      <p class="reel__v">Circuit de Barcelona-Catalunya</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P17</dd></div><div><dt>Ocon</dt><dd class="r r--out">P13</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 08 · 28 Jun</p>
+      <h3 class="display">Austria</h3>
+      <p class="reel__v">Red Bull Ring, Spielberg</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P14</dd></div><div><dt>Ocon</dt><dd class="r r--out">P16</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 09 · 5 Jul</p>
+      <h3 class="display">Great Britain</h3>
+      <p class="reel__v">Silverstone Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P12</dd></div><div><dt>Ocon</dt><dd class="r r--out">P13</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 10 · 19 Jul</p>
+      <h3 class="display">Belgium</h3>
+      <p class="reel__v">Spa-Francorchamps</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P14</dd></div><div><dt>Ocon</dt><dd class="r r--out">P17</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 11 · 26 Jul</p>
+      <h3 class="display">Hungary</h3>
+      <p class="reel__v">Hungaroring, Budapest</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P19</dd></div><div><dt>Ocon</dt><dd class="r r--out">P16</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 12 · 23 Aug</p>
+      <h3 class="display">Netherlands</h3>
+      <p class="reel__v">Circuit Zandvoort</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--ret">Ret</dd></div><div><dt>Ocon</dt><dd class="r r--ret">Ret</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 13 · 6 Sep</p>
+      <h3 class="display">Italy</h3>
+      <p class="reel__v">Monza Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P15</dd></div><div><dt>Ocon</dt><dd class="r r--out">P16</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c">
+      <p class="label">Round 14 · 13 Sep</p>
+      <h3 class="display">Spain</h3>
+      <p class="reel__v">Madring, Madrid</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P16</dd></div><div><dt>Ocon</dt><dd class="r r--out">P11</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 15 · 26 Sep</p>
+      <h3 class="display">Azerbaijan</h3>
+      <p class="reel__v">Baku City Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--pts">P9</dd></div><div><dt>Ocon</dt><dd class="r r--pts">P8</dd></div></dl>
+      <p class="reel__p"><b>+6</b> pts</p>
+    </li><li class="reel__c">
+      <p class="label">Round 16 · 4 Oct</p>
+      <h3 class="display">Bahrain</h3>
+      <p class="reel__v">Sepang International Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P14</dd></div><div><dt>Ocon</dt><dd class="r r--out">P15</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 17 · 11 Oct</p>
+      <h3 class="display">Singapore</h3>
+      <p class="reel__v">Marina Bay Street Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P12</dd></div><div><dt>Ocon</dt><dd class="r r--out">P13</dd></div></dl>
+      <p class="reel__p"><b>+3</b> pts</p>
+    </li><li class="reel__c">
+      <p class="label">Round 18 · 25 Oct</p>
+      <h3 class="display">United States</h3>
+      <p class="reel__v">Circuit of the Americas, Austin</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--ret">Ret</dd></div><div><dt>Ocon</dt><dd class="r r--out">P14</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c is-pts">
+      <p class="label">Round 19 · 1 Nov</p>
+      <h3 class="display">Mexico City</h3>
+      <p class="reel__v">Autódromo Hermanos Rodríguez</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--ret">Ret</dd></div><div><dt>Hirakawa</dt><dd class="r r--pts">P10</dd></div></dl>
+      <p class="reel__p"><b>+1</b> pts</p>
+    </li><li class="reel__c">
+      <p class="label">Round 20 · 8 Nov</p>
+      <h3 class="display">São Paulo</h3>
+      <p class="reel__v">Interlagos Circuit</p>
+      <dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--out">P17</dd></div><div><dt>Câmara</dt><dd class="r r--out">P20</dd></div></dl>
+      <p class="reel__p">No points</p>
+    </li><li class="reel__c is-next is-up" data-reel-next-race>
+      <p class="label"><span class="live"></span>Next 21 · 21 Nov</p>
+      <h3 class="display">Las Vegas</h3>
+      <p class="reel__v">Las Vegas Strip Circuit</p>
+      <p class="reel__tbc">Sat 21 Nov · 20:00 PST</p>
+      <p class="reel__p"></p>
+    </li><li class="reel__c is-up">
+      <p class="label">Round 22 · 29 Nov</p>
+      <h3 class="display">Qatar</h3>
+      <p class="reel__v">Lusail International Circuit</p>
+      <p class="reel__tbc">To come</p>
+      <p class="reel__p"></p>
+    </li><li class="reel__c is-up">
+      <p class="label">Round 23 · 6 Dec</p>
+      <h3 class="display">Abu Dhabi</h3>
+      <p class="reel__v">Yas Marina Circuit</p>
+      <p class="reel__tbc">To come</p>
+      <p class="reel__p"></p>
+    </li>
+  </ol>
+</div>
+</section>
+
+<section class="sec" id="drivers">
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>03 · Drivers</p><h2 class="display sh__t" data-reveal>Who drives.</h2><p class="sh__sub" data-reveal>Bearman leads the scoring. With four race drivers used this season, the limit, the second seat for the last three rounds goes to Hirakawa or Câmara.</p></header>
+    <div class="faces">
+      
+      <a class="face" href="drivers.html#bearman" data-reveal style="--d:0ms">
+        <figure class="ph face__ph"><img src="assets/img/bearP-1920.jpg" srcset="assets/img/bearP-960.jpg 960w, assets/img/bearP-1920.jpg 1920w" sizes="(min-width: 900px) 25vw, 50vw" alt="Oliver Bearman in Haas team kit" loading="lazy" decoding="async"></figure>
+        <div class="face__in">
+          <p class="label">Race driver · #87</p>
+          <h3 class="display"><small>Oliver</small>Bearman</h3>
+          <dl class="facts"><div><dt>2026 points</dt><dd>23</dd></div><div><dt>Championship</dt><dd>P13</dd></div></dl>
+        </div>
+      </a>
+      <a class="face" href="drivers.html#camara" data-reveal style="--d:90ms">
+        <figure class="ph face__ph"><img src="assets/img/camP-1920.jpg" srcset="assets/img/camP-960.jpg 960w, assets/img/camP-1920.jpg 1920w" sizes="(min-width: 900px) 25vw, 50vw" alt="Rafael Câmara, pictured in 2022" loading="lazy" decoding="async"></figure>
+        <div class="face__in">
+          <p class="label">Race driver 2027 · #51</p>
+          <h3 class="display"><small>Rafael</small>Câmara</h3>
+          <dl class="facts"><div><dt>F1 debut</dt><dd>São Paulo 2026</dd></div><div><dt>Debut result</dt><dd>P20</dd></div></dl>
+        </div>
+      </a>
+      <a class="face" href="drivers.html#hirakawa" data-reveal style="--d:180ms">
+        <figure class="ph face__ph"><img src="assets/img/hiraP-1920.jpg" srcset="assets/img/hiraP-960.jpg 960w, assets/img/hiraP-1920.jpg 1920w" sizes="(min-width: 900px) 25vw, 50vw" alt="Ryo Hirakawa in Toyota Gazoo Racing team kit" loading="lazy" decoding="async"></figure>
+        <div class="face__in">
+          <p class="label">Reserve driver · #50</p>
+          <h3 class="display"><small>Ryo</small>Hirakawa</h3>
+          <dl class="facts"><div><dt>GP starts</dt><dd>1</dd></div><div><dt>Points</dt><dd>1</dd></div></dl>
+        </div>
+      </a>
+      <a class="face" href="drivers.html#doohan" data-reveal style="--d:270ms">
+        <figure class="ph face__ph"><img src="assets/img/doohP-1920.jpg" srcset="assets/img/doohP-960.jpg 960w, assets/img/doohP-1920.jpg 1920w" sizes="(min-width: 900px) 25vw, 50vw" alt="Jack Doohan, pictured in 2023" loading="lazy" decoding="async"></figure>
+        <div class="face__in">
+          <p class="label">Reserve driver</p>
+          <h3 class="display"><small>Jack</small>Doohan</h3>
+          <dl class="facts"><div><dt>Role</dt><dd>Reserve</dd></div><div><dt>Joined</dt><dd>2026</dd></div></dl>
+        </div>
+      </a>
+    </div>
+    <p class="fine">Portraits: Wikimedia Commons, see <a href="credits.html">photo credits</a>. Some pre-date the driver joining the team.</p>
+  </div>
+</section>
+
+<section class="sec carsec" id="car" data-car-ui>
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>04 · The machine</p><h2 class="display sh__t" data-reveal>VF-26</h2><p class="sh__sub" data-reveal>The first Haas built for Formula 1’s biggest rule change in a generation. Smaller and lighter, with wings that move and a power unit that makes close to half its power from electricity.</p></header>
+    <div class="stage" data-car3d="teaser" aria-label="Interactive 3D model of the VF-26. Drag to rotate."><noscript><figure class="ph "><img src="assets/img/bear3-1920.jpg" srcset="assets/img/bear3-960.jpg 960w, assets/img/bear3-1920.jpg 1920w" sizes="100vw" alt="Side view of Oliver Bearman’s Haas VF-26 on the kerb" loading="lazy" decoding="async"></figure></noscript></div>
+    <p class="stage__hint">Drag to rotate</p>
+    <div class="kpis"><div data-reveal><p class="display"><span data-count="768">768</span><small>kg</small></p><span>Minimum weight</span></div><div data-reveal><p class="display"><span data-count="350">350</span><small>kW</small></p><span>Electric power</span></div><div data-reveal><p class="display"><span data-count="3400">3400</span><small>mm</small></p><span>Max wheelbase</span></div><div data-reveal><p class="display"><span data-count="100">100</span><small>%</small></p><span>Sustainable fuel</span></div></div>
+    <div class="carsec__cta" data-reveal><a class="cta cta--solid" href="car.html"><span>Open the full explorer</span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a><p class="fine">Ten systems, an x-ray, and an exploded view down to the engine.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="news">
+  <div class="wrap">
+    <header class="sh"><p class="label" data-reveal>05 · News</p><h2 class="display sh__t" data-reveal>From the garage.</h2></header>
+    <div class="news">
+      <a class="news__lead" href="#news" data-reveal>
+        <figure class="ph news__ph"><img src="assets/img/bear2-1920.jpg" srcset="assets/img/bear2-960.jpg 960w, assets/img/bear2-1920.jpg 1920w" sizes="(min-width: 900px) 50vw, 100vw" alt="Oliver Bearman’s Haas VF-26 rounding a corner at the Red Bull Ring" loading="lazy" decoding="async"></figure>
+        <p class="label">Race preview · 13 Nov</p>
+        <h3>Round 21: back on home soil, under the lights in Las Vegas</h3>
+      </a>
+      <ul class="news__list"><li data-reveal><a href="#news"><p class="label">Drivers · 8 Nov</p><h3>Câmara reaches the flag on his Formula 1 debut at Interlagos</h3><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></li><li data-reveal><a href="#news"><p class="label">Race report · 1 Nov</p><h3>Hirakawa scores on his Grand Prix debut in Mexico City</h3><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></li><li data-reveal><a href="#news"><p class="label">Announcement · Oct</p><h3>Rafael Câmara confirmed as Haas race driver for 2027</h3><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></li><li data-reveal><a href="#news"><p class="label">Partners · Jul</p><h3>CommScope and Exein join the team at Spa</h3><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></li></ul>
+    </div>
+    <p class="by">Photo: Lukas Raich (CC BY-SA 4.0) · <a href="credits.html">Credits</a></p>
+  </div>
+</section>
+
+<section class="sec about">
+  <div class="wrap about__g">
+    <div>
+      <p class="label" data-reveal>06 · Who we are</p>
+      <p class="display about__t" data-reveal>The smallest team on the grid. Built across three countries. Racing the biggest names in motorsport since 2016.</p>
+      <dl class="facts facts--lg" data-reveal><div><dt>First race</dt><dd>2016</dd></div><div><dt>Best result</dt><dd>P4</dd></div><div><dt>Bases</dt><dd>3</dd></div></dl>
+      <div data-reveal><a class="cta " href="team.html"><span>Our story</span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></div>
+    </div>
+    <div data-reveal><figure class="ph about__ph"><img src="assets/img/bear3-1920.jpg" srcset="assets/img/bear3-960.jpg 960w, assets/img/bear3-1920.jpg 1920w" sizes="(min-width: 900px) 50vw, 100vw" alt="Side view of Oliver Bearman’s Haas VF-26 on the kerb" loading="lazy" decoding="async" style="object-position:62% 50%"></figure><p class="by">Photo: Lukas Raich (CC BY-SA 4.0) · <a href="credits.html">Credits</a></p></div>
+  </div>
+</section>
+
+<section class="sec" id="store">
+  <div class="wrap duo">
+    <a class="duo__c" href="#store" data-reveal><p class="label">07 · Store</p><h3 class="display">The 2026 kit</h3><p>Team polo, race-day jacket and caps, by Castore.</p><span class="cta"><span>Shop the collection</span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+    <a class="duo__c" href="#store" data-reveal><p class="label">08 · Fan club</p><h3 class="display">Join the pit crew</h3><p>Free membership, ticket ballots and behind-the-garage films.</p><span class="cta"><span>Become a member</span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+  </div>
+</section>
+
+<section class="sec sec--tight">
+  <div class="wrap">
+    <div class="pstrip__h"><p class="label">09 · Partners</p><a class="cta " href="partners.html"><span>All partners</span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></div>
+    <ul class="pstrip"><li>Toyota Gazoo Racing</li><li>Haas Automation</li><li>Ferrari</li><li>Pirelli</li><li>Castore</li><li>D.Energy</li><li>Singha</li><li>Zoomex</li><li>Ruckus Networks</li><li>CommScope</li><li>Exein</li><li>Fix Network</li></ul>
+  </div>
+</section>
+</main>
+<footer class="ftr">
+  <div class="wrap ftr__top">
+    <div class="ftr__brand"><span class="logo"><b>HAAS</b><i>TGR · F1 Team</i></span><p>Kannapolis · Banbury · Maranello</p></div>
+    <form class="nl" data-newsletter novalidate>
+      <label for="nl-email">Race previews and results, straight to your inbox</label>
+      <div class="nl__row"><input id="nl-email" type="email" name="email" placeholder="Email address" autocomplete="email" required><button type="submit">Subscribe <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+      <p class="nl__msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="wrap ftr__cols">
+    <div><h2>Team</h2><a href="drivers.html">Drivers</a><a href="car.html">VF-26</a><a href="season.html">Season</a><a href="team.html">Team</a><a href="partners.html">Partners</a></div>
+    <div><h2>More</h2><a href="index.html#news">News</a><a href="index.html#store">Store</a><a href="index.html#store">Fan club</a><a href="team.html#careers">Careers</a></div>
+    <div><h2>Follow</h2><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+    <div><h2>Legal</h2><a href="#">Privacy</a><a href="#">Cookies</a><a href="credits.html">Photo credits</a></div>
+  </div>
+  <div class="wrap ftr__legal">
+    <p><strong>Unofficial design concept.</strong> A fan-made redesign exercise, not affiliated with or endorsed by Haas F1 Team, Formula 1 or any partner named. Trademarks belong to their owners. The 3D car is an original model, not team data.</p>
+  </div>
+</footer>
+<script src="assets/main.js" defer></script>
+<script type="module" src="assets/car3d.js"></script>
+</body>
+</html>
