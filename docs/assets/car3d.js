@@ -474,7 +474,7 @@ function mount(el) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // keep the whole car in frame on tall, narrow screens
-    fit = Math.max(1, 1.95 / camera.aspect) * (variant === 'teaser' ? 1.02 : w > 900 ? 1.22 : 1);
+    fit = Math.max(1, 1.62 / camera.aspect) * (variant === 'teaser' ? 1.02 : w > 900 ? 1.22 : 1);
     // on wide screens the info panel sits on the right, so nudge the car left
     if (variant === 'explorer' && w > 900) camera.setViewOffset(w, h, w * 0.1, -h * 0.04, w, h); else camera.clearViewOffset();
     camera.updateProjectionMatrix();
