@@ -173,12 +173,13 @@ export const car = {
   ],
 };
 
+// Each item links somewhere real: a page on this site, or the outside report it is based on.
 export const news = [
-  { tag: 'Race preview', date: '13 Nov', title: 'Round 21: back on home soil, under the lights in Las Vegas', photo: 'bear2' },
-  { tag: 'Drivers', date: '8 Nov', title: 'Câmara reaches the flag on his Formula 1 debut at Interlagos' },
-  { tag: 'Race report', date: '1 Nov', title: 'Hirakawa scores on his Grand Prix debut in Mexico City' },
-  { tag: 'Announcement', date: 'Oct', title: 'Rafael Câmara confirmed as Haas race driver for 2027' },
-  { tag: 'Partners', date: 'Jul', title: 'CommScope and Exein join the team at Spa' },
+  { tag: 'Race preview', date: '13 Nov', title: 'Round 21: back on home soil, under the lights in Las Vegas', photo: 'bear2', href: 'season.html#calendar' },
+  { tag: 'Drivers', date: '8 Nov', title: 'Câmara reaches the flag on his Formula 1 debut at Interlagos', href: 'drivers.html#camara' },
+  { tag: 'Race report', date: '1 Nov', title: 'Hirakawa scores on his Grand Prix debut in Mexico City', href: 'https://www.racefans.net/2026/10/31/ocon-out-hirakawa-in-as-haas-make-shock-mexican-grand-prix-driver-change/', src: 'RaceFans' },
+  { tag: 'Announcement', date: 'Oct', title: 'Rafael Câmara confirmed as Haas race driver for 2027', href: 'https://www.espn.com/f1/story/_/id/50131330/rafael-camara-haas-completes-driver-line-2027-formula-1', src: 'ESPN' },
+  { tag: 'Partners', date: 'Jul', title: 'CommScope and Exein join the team at Spa', href: 'partners.html' },
 ];
 
 export const timeline = [
@@ -199,11 +200,36 @@ export const bases = [
   { city: 'Maranello', region: 'Emilia-Romagna, Italy', role: 'Design office' },
 ];
 
+// [name, role, website, logo file in assets/img/logos (optional), 'dark' if the logo is white]
+// Websites are each company's main address. Logos are public-domain files from Wikimedia
+// Commons, or marks cut from the CC BY-SA photo of the car; a partner without one shows its name.
 export const partners = [
-  { tier: 'Title partner', items: [['Toyota Gazoo Racing', 'Title Partner']] },
-  { tier: 'Founding & technical', items: [['Haas Automation', 'Founding Partner'], ['Ferrari', 'Power Unit Supplier'], ['Pirelli', 'Tyre Supplier']] },
-  { tier: 'Official partners', items: [['Castore', 'Kit & Retail'], ['D.Energy', 'Sustainability'], ['Singha', 'Beer'], ['Zoomex', 'Crypto Exchange'], ['Ruckus Networks', 'Official Partner'], ['CommScope', 'Official Partner'], ['Exein', 'Official Partner'], ['Fix Network', 'Official Partner']] },
+  { tier: 'Title partner', items: [['Toyota Gazoo Racing', 'Title Partner', 'https://toyotagazooracing.com/', 'tgr.svg']] },
+  { tier: 'Founding & technical', items: [
+    ['Haas Automation', 'Founding Partner', 'https://www.haascnc.com/', 'haas-automation.png'],
+    ['Ferrari', 'Power Unit Supplier', 'https://www.ferrari.com/'],
+    ['Pirelli', 'Tyre Supplier', 'https://www.pirelli.com/', 'pirelli.svg'],
+  ] },
+  { tier: 'Official partners', items: [
+    ['Castore', 'Kit & Retail', 'https://castore.com/'],
+    ['D.Energy', 'Sustainability', ''],
+    ['Singha', 'Beer', 'https://www.singha.com/', 'singha.png'],
+    ['Zoomex', 'Crypto Exchange', 'https://www.zoomex.com/', 'zoomex.png', 'dark'],
+    ['Ruckus Networks', 'Official Partner', 'https://www.ruckusnetworks.com/', 'ruckus.png', 'dark'],
+    ['CommScope', 'Official Partner', 'https://www.commscope.com/'],
+    ['Exein', 'Official Partner', 'https://www.exein.io/'],
+    ['Fix Network', 'Official Partner', 'https://www.fixnetwork.com/', 'fix.png'],
+    ['Orion180', 'Official Partner', 'https://www.orion180.com/', 'orion.png'],
+    ["Play'n GO", 'Official Partner', 'https://www.playngo.com/', 'playngo.png'],
+  ] },
 ];
+
+// The team's own channels. This concept links out to them rather than imitating them.
+export const official = {
+  site: 'https://www.haasf1team.com/',
+  partners: 'https://www.haasf1team.com/partners',
+  social: [['Instagram', 'https://www.instagram.com/haasf1team/'], ['X', 'https://x.com/HaasF1Team'], ['TikTok', 'https://www.tiktok.com/@haasf1team'], ['YouTube', 'https://www.youtube.com/@HaasF1Team']],
+};
 
 export const careers = [['Aerodynamics', 'Maranello'], ['Vehicle Performance', 'Banbury'], ['Composites & Manufacturing', 'Banbury'], ['Race Team', 'Travelling'], ['Partnerships & Marketing', 'Kannapolis'], ['Early Careers', 'All sites']];
 

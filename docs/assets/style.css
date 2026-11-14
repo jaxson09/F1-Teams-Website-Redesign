@@ -696,6 +696,25 @@ a.hero__cell:hover { background: rgba(242, 240, 234, 0.05); }
 .clock time { font: 800 clamp(1.6rem, 2.6vw, 2.6rem)/1 var(--sans); font-stretch: 125%; font-variant-numeric: tabular-nums; color: var(--fg); }
 .clock span { font: 500 0.62rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
 
+/* ============ v5: real destinations, partner logos ============ */
+.ftr__off { display: grid; gap: 14px; align-content: start; justify-items: start; }
+.ftr__offt { font: 600 1.1rem/1.35 var(--sans); max-width: 34ch; }
+.jobs li > div { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.jobs li > div span { font: 700 clamp(1.2rem, 2.4vw, 2.3rem) var(--sans); font-stretch: 118%; text-transform: uppercase; letter-spacing: -0.02em; }
+.jobs__cta { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: clamp(24px, 3vw, 44px); }
+.jobs__cta .fine { margin: 0; }
+.plogo { display: grid; place-items: center; height: 112px; padding: 18px 22px; background: #f2f0ea; margin-bottom: auto; align-self: stretch; }
+.plogo img { max-width: 100%; max-height: 74px; width: auto; height: auto; object-fit: contain; }
+.plogo--dark { background: #17171b; }
+.plogo--name { font: 800 1.05rem var(--sans); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.01em; color: #0b0b0d; text-align: center; }
+.pgrid a, .pgrid__static { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; min-height: 250px; padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pgrid a .arr { top: auto; bottom: 22px; }
+.pgrid h3 { margin-top: 18px; padding-right: 30px; }
+.pgrid--title .plogo { background: #fff; height: clamp(110px, 16vw, 200px); } .pgrid--title .plogo img { width: min(72%, 640px); max-height: none; }
+.pgrid--title a:hover { background: #c40025; }
+.creds__h { font: 800 clamp(1.3rem, 2.4vw, 2.2rem) var(--sans); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.02em; margin: clamp(36px, 5vw, 64px) 0 14px; scroll-margin-top: 90px; }
+.creds__p { color: var(--mut); max-width: 78ch; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }

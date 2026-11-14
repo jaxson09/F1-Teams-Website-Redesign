@@ -16,7 +16,9 @@ const NR = d.nextRace;
 /* ---------- shared pieces ---------- */
 
 const arrow = `<svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>`;
-const link = (href, label, cls = '') => `<a class="cta ${cls}" href="${href}"><span>${label}</span>${arrow}</a>`;
+const ext = (href) => (/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : '');
+const outIcon = `<svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>`;
+const link = (href, label, cls = '') => `<a class="cta ${cls}" href="${href}"${ext(href)}><span>${label}</span>${/^https?:/.test(href) ? outIcon : arrow}</a>`;
 const commons = (file) => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file.replace(/ /g, '_'))}`;
 const credit = (p) => `<a class="credit" href="${commons(p.file)}" rel="noopener">Photo: ${p.by} · ${p.lic}</a>`;
 
@@ -68,17 +70,16 @@ const foot = (three) => `</main>
 <footer class="ftr">
   <div class="wrap ftr__top">
     <div class="ftr__brand">${logo}<p>Kannapolis · Banbury · Maranello</p></div>
-    <form class="nl" data-newsletter novalidate>
-      <label for="nl-email">Race previews and results, straight to your inbox</label>
-      <div class="nl__row"><input id="nl-email" type="email" name="email" placeholder="Email address" autocomplete="email" required><button type="submit">Subscribe ${arrow}</button></div>
-      <p class="nl__msg" role="status" aria-live="polite"></p>
-    </form>
+    <div class="ftr__off">
+      <p class="ftr__offt">This is a design concept. For tickets, the store and team news, go to the real thing.</p>
+      ${link(d.official.site, 'haasf1team.com')}
+    </div>
   </div>
   <div class="wrap ftr__cols">
     <div><h2>Team</h2>${d.nav.slice(1).map((n) => `<a href="${n.href}">${n.label}</a>`).join('')}</div>
-    <div><h2>More</h2><a href="index.html#news">News</a><a href="index.html#store">Store</a><a href="index.html#store">Fan club</a><a href="team.html#careers">Careers</a></div>
-    <div><h2>Follow</h2><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
-    <div><h2>Legal</h2><a href="#">Privacy</a><a href="#">Cookies</a><a href="credits.html">Photo credits</a></div>
+    <div><h2>More</h2><a href="index.html#news">News</a><a href="index.html#store">Store</a><a href="index.html#fans">Fan club</a><a href="team.html#careers">Careers</a></div>
+    <div><h2>Follow the team</h2>${d.official.social.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join('')}</div>
+    <div><h2>This site</h2><a href="credits.html#about">About this concept</a><a href="credits.html">Photo and logo credits</a></div>
   </div>
   <div class="wrap ftr__legal">
     <p><strong>Unofficial design concept.</strong> A fan-made redesign exercise, not affiliated with or endorsed by Haas F1 Team, Formula 1 or any partner named. Trademarks belong to their owners. The 3D car is an original model, not team data.</p>
@@ -327,14 +328,14 @@ ${champSection('02 · Standings')}
   <div class="wrap">
     ${secHead('05 · News', 'From the garage.')}
     <div class="news">
-      <a class="news__lead" href="#news" data-reveal>
+      <a class="news__lead" href="${d.news[0].href}"${ext(d.news[0].href)} data-reveal>
         ${photo(d.news[0].photo, { cls: 'news__ph', sizes: '(min-width: 900px) 50vw, 100vw' })}
         <p class="label">${d.news[0].tag} · ${d.news[0].date}</p>
         <h3>${d.news[0].title}</h3>
       </a>
       <ul class="news__list">${d.news
         .slice(1)
-        .map((n) => `<li data-reveal><a href="#news"><p class="label">${n.tag} · ${n.date}</p><h3>${n.title}</h3>${arrow}</a></li>`)
+        .map((n) => `<li data-reveal><a href="${n.href}"${ext(n.href)}><p class="label">${n.tag} · ${n.date}${n.src ? ` · ${n.src}` : ''}</p><h3>${n.title}</h3>${n.src ? outIcon : arrow}</a></li>`)
         .join('')}</ul>
     </div>
     ${by(d.news[0].photo)}
@@ -355,8 +356,8 @@ ${champSection('02 · Standings')}
 
 <section class="sec" id="store">
   <div class="wrap duo">
-    <a class="duo__c" href="#store" data-reveal><p class="label">07 · Store</p><h3 class="display">The 2026 kit</h3><p>Team polo, race-day jacket and caps, by Castore.</p><span class="cta"><span>Shop the collection</span>${arrow}</span></a>
-    <a class="duo__c" href="#store" data-reveal><p class="label">08 · Fan club</p><h3 class="display">Join the pit crew</h3><p>Free membership, ticket ballots and behind-the-garage films.</p><span class="cta"><span>Become a member</span>${arrow}</span></a>
+    <a class="duo__c" href="${d.official.site}" target="_blank" rel="noopener" data-reveal><p class="label">07 · Store</p><h3 class="display">The 2026 kit</h3><p>Team polo, race-day jacket and caps, by Castore. This concept has no shop of its own, so this goes to the team’s site.</p><span class="cta"><span>Official store at haasf1team.com</span>${outIcon}</span></a>
+    <a class="duo__c" id="fans" href="${d.official.site}" target="_blank" rel="noopener" data-reveal><p class="label">08 · Fan club</p><h3 class="display">Join the pit crew</h3><p>Membership, ticket news and behind-the-garage films are run by the team itself.</p><span class="cta"><span>Fan hub at haasf1team.com</span>${outIcon}</span></a>
   </div>
 </section>
 
@@ -684,7 +685,8 @@ page(
 <section class="sec" id="careers">
   <div class="wrap">
     ${secHead('06 · Careers', 'Come and build it.', `<p class="sh__sub" data-reveal>On a small team your work reaches the car quickly, and everyone can see whose it was.</p>`)}
-    <ul class="jobs">${d.careers.map(([t, l]) => `<li data-reveal><a href="#careers"><span>${t}</span><em>${l}</em>${arrow}</a></li>`).join('')}</ul>
+    <ul class="jobs">${d.careers.map(([t, l]) => `<li data-reveal><div><span>${t}</span><em>${l}</em></div></li>`).join('')}</ul>
+    <div class="jobs__cta" data-reveal>${link(d.official.site, 'Open roles at haasf1team.com', 'cta--solid')}<p class="fine">Departments shown for illustration. Live vacancies are on the team’s own site.</p></div>
   </div>
 </section>
 `
@@ -703,7 +705,12 @@ page(
 <section class="sec${i ? ' sec--tight' : ''}">
   <div class="wrap">
     <p class="label" data-reveal>${pad(i + 1)} · ${t.tier}</p>
-    <ul class="pgrid${i === 0 ? ' pgrid--title' : ''}">${t.items.map(([n, r]) => `<li data-reveal><a href="#"><h3 class="display">${n}</h3><p class="label">${r}</p>${arrow}</a></li>`).join('')}</ul>
+    <ul class="pgrid${i === 0 ? ' pgrid--title' : ''}">${t.items
+      .map(([n, r, u, lg, dk]) => {
+        const body = `${lg ? `<span class="plogo${dk ? ' plogo--dark' : ''}"><img src="assets/img/logos/${lg}" alt="${esc(n)} logo" loading="lazy"></span>` : `<span class="plogo plogo--name" aria-hidden="true">${n}</span>`}<h3 class="display">${n}</h3><p class="label">${r}</p>`;
+        return `<li data-reveal>${u ? `<a href="${u}" target="_blank" rel="noopener">${body}${outIcon}</a>` : `<div class="pgrid__static">${body}</div>`}</li>`;
+      })
+      .join('')}</ul>
   </div>
 </section>`
       )
@@ -711,7 +718,7 @@ page(
     `
 <section class="sec"><div class="wrap cta-band" data-reveal>
   <h2 class="display">Put your name on the car.</h2>
-  ${link('#', 'Talk to partnerships about 2027', 'cta--solid')}
+  ${link(d.official.partners, 'Partnerships at haasf1team.com', 'cta--solid')}
 </div></section>`
 );
 
@@ -726,6 +733,10 @@ page(
   <ul class="creds">${Object.entries(d.photos)
     .map(([id, p]) => `<li><img src="assets/img/${id}-960.jpg" alt="" loading="lazy"><div><h2>${esc(p.file)}</h2><p>${p.alt}. ${p.where}.</p><p class="label">By ${p.by} · <a href="${p.lic === 'CC0' ? 'https://creativecommons.org/publicdomain/zero/1.0/' : `https://creativecommons.org/licenses/by-sa/${p.lic.slice(-3)}/`}">${p.lic}</a> · <a href="${commons(p.file)}">Original on Wikimedia Commons</a></p></div></li>`)
     .join('')}</ul>
+  <h2 class="creds__h" id="logos">Logos</h2>
+  <p class="creds__p">The marks on the 3D car (Haas, GR, Ruckus, Fix Network, Singha, Zoomex, Orion180, Play’n GO) were cut from the photograph “FIA F1 Austria 2026 Nr. 87 Bearman (3).jpg” by Lukas Raich, CC BY-SA 4.0, and are shared under the same licence. The Toyota Gazoo Racing, Haas Automation and Pirelli logos on the partners page are public-domain files from Wikimedia Commons. All of them are trademarks of their owners and appear here only to identify those companies.</p>
+  <h2 class="creds__h" id="about">About this concept</h2>
+  <p class="creds__p">This site is an unofficial, fan-made design exercise. It is not the Haas F1 Team website and is not affiliated with or endorsed by the team, Formula 1 or any partner named. It sets no cookies, collects no data and sells nothing. Links marked ↗ leave this site for the team’s own channels, partner websites or the news report a story is based on.</p>
   <p class="fine">Fonts: Archivo and JetBrains Mono (SIL Open Font License). 3D rendering: three.js (MIT). The 3D car is an original model built for this concept.</p>
 </div></section>`
 );

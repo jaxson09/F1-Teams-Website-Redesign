@@ -37,7 +37,9 @@ To publish on GitHub Pages: Settings → Pages → deploy from branch, folder `/
 
 The car is an original model generated in code with three.js (lofted body sections, aerofoil wings, lathed tyres). It is built to the real overall dimensions, but it is not a scan or CAD of the real VF-26.
 
-- **Livery:** painted to follow the 2026 car as photographed (white over carbon, red shoulder stripe, red airbox, white halo). Team and partner names are set in the site typeface in their real positions; they are not the official logo artwork.
+- **Livery:** painted to follow the 2026 car as photographed (white over carbon, red shoulder stripe, red airbox, white halo). The logos on the car (Haas, GR, Ruckus, Fix Network, Singha, Zoomex, Orion180, Play'n GO) are transparent PNGs in `docs/assets/img/decals/`, cut from a CC BY-SA 4.0 photograph of the real car by Lukas Raich and shared under the same licence. They are trademarks of their owners. Race numbers are typeset.
+- **Wheels:** lathed tyre sections with wrapped sidewall markings, dished rims with ten solid spokes, and a carbon brake drum behind them.
+- **Proportions:** nose length, cockpit position, sidepod inlet position and front-wing endplates were measured from side-on photographs.
 - **Systems:** every assembly is a group tagged with one of ten systems (power unit, hybrid system, fuel, cooling, gearbox, suspension, brakes, bodywork, survival cell, wheels). Picking a system ghosts everything else.
 - **Exploded view:** two stages. The first half of the slider lifts the bodywork and assemblies apart; the second half pulls the power unit and gearbox apart.
 - **Sizes:** tyres are the 2026 Pirelli dimensions (front 705 × 280 mm, rear 710 × 375 mm, 18-inch rims), the car is 1900 mm wide on a 3400 mm wheelbase, and body heights were estimated from side-on photos of the real car.
@@ -56,6 +58,8 @@ Results, calendar and points were taken from Wikipedia's 2026 season tables on 1
 
 - The second race seat for the final three rounds was unannounced at the time of writing.
 - The 2025 v 2026 figures are regulation values; combustion power is approximate. The drag/downforce bars for the aero modes are an illustrative index, not measured data.
-- News headlines, store, fan-club and careers copy are placeholder concept copy, and those links go nowhere.
+- Every link leads somewhere: a page or section of this site, a partner's website, the team's own site and social accounts, or the news report a story is based on. The external addresses were not checked from the build environment.
+- News headlines, store, fan-club and careers copy are concept copy. Store, fan club and careers link out to the team's own site.
+- Partner logos on `partners.html` are public-domain files from Wikimedia Commons or marks cut from the car photo; partners without a free logo show their name.
 
 Fonts: Archivo, JetBrains Mono (SIL Open Font License). three.js (MIT).
