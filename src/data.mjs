@@ -133,12 +133,12 @@ export const drivers = [
 export const car = {
   intro: 'The first Haas built for Formula 1’s biggest rule change in a generation. Smaller and lighter, with wings that move and a power unit that makes close to half its power from electricity.',
   hotspots: [
-    { id: 'fw', title: 'Active front wing', stat: ['2', 'movable flaps per side'], text: 'The flaps flatten on the straights to shed drag and snap back for the corners. Switch to Straight mode and watch them move.' },
+    { id: 'fw', title: 'Active front wing', stat: ['2', 'movable flaps per side'], text: 'In Straight mode the two upper flaps drop their trailing edges to shed drag, then snap back for the corner. On the Haas the actuator is thought to sit under the nose rather than in each wing half. Press Straight and watch them move.' },
     { id: 'ck', title: 'Survival cell', stat: ['768', 'kg minimum, with driver'], text: 'Tougher 2026 crash tests, a stronger roll hoop and a two-stage nose structure, in a car 30 kg lighter than last year.' },
     { id: 'pu', title: 'Ferrari 067/6 power unit', stat: ['350', 'kW from the MGU-K'], text: 'A 1.6-litre turbo V6 hybrid. The MGU-H is gone, and the electric motor delivers nearly three times last year’s power. Turn on X-ray to see it.' },
-    { id: 'ty', title: 'Narrower tyres', stat: ['−30', 'mm rear tyre width'], text: '18-inch wheels stay. Fronts are 25 mm narrower and rears 30 mm narrower, cutting drag and weight.' },
+    { id: 'ty', title: 'Smaller tyres', stat: ['710', 'mm rear tyre diameter'], text: 'Still on 18-inch rims, but smaller all round: fronts are 705 mm tall and 280 mm wide, rears 710 mm tall and 375 mm wide. The model’s tyres are built to those sizes.' },
     { id: 'fl', title: 'Flatter floor', stat: ['−30', '% downforce vs 2025'], text: 'The long ground-effect tunnels are out. A flatter floor and a larger diffuser make the car less sensitive to ride height.' },
-    { id: 'rw', title: 'Active rear wing', stat: ['3', 'elements, two of them movable'], text: 'Works in step with the front wing. DRS is gone: every car can open its wings on every designated straight.' },
+    { id: 'rw', title: 'Active rear wing', stat: ['3', 'elements, two of them movable'], text: 'The two upper elements hinge open in Straight mode, lifting their leading edges so air passes through the gaps. It works in step with the front wing, on every designated straight, for every car.' },
   ],
   kpis: [['768', 'kg', 'Minimum weight'], ['350', 'kW', 'Electric power'], ['3400', 'mm', 'Max wheelbase'], ['100', '%', 'Sustainable fuel']],
   // [label, 2025 value, 2026 value, unit, note]
@@ -150,7 +150,13 @@ export const car = {
     ['Combustion power', 550, 400, 'kW', 'Approximate. The V6 does less of the work'],
     ['Front tyre width', 305, 280, 'mm', '25 mm narrower'],
     ['Rear tyre width', 405, 375, 'mm', '30 mm narrower'],
+    ['Front tyre diameter', 720, 705, 'mm', '15 mm smaller'],
+    ['Rear tyre diameter', 720, 710, 'mm', '10 mm smaller'],
   ],
+  aeroCards: {
+    corner: { title: 'Corner mode', stat: ['Closed', 'flaps at full angle'], text: 'The default. Every flap sits at its steep, high-downforce angle for braking and turning. The car returns here by itself the moment the driver brakes or lifts.' },
+    straight: { title: 'Straight mode', stat: ['Open', 'front and rear together'], text: 'The driver opens both wings in a marked activation zone. At the front, the two upper flaps drop flat. At the rear, the two upper elements hinge open and gaps appear between them. Drag falls, so the battery’s energy carries the car further.' },
+  },
   aero: { corner: { label: 'Corner mode', drag: 100, down: 100, text: 'Flaps closed. Maximum downforce for braking and turning.' }, straight: { label: 'Straight mode', drag: 45, down: 70, text: 'Flaps open. Drag falls sharply so the battery’s energy goes further.' } },
   inner: [['Combustion engine', '1.6 L V6 turbo', '#d4001f'], ['Turbocharger', 'Single, no MGU-H', '#ff5a36'], ['MGU-K', '350 kW motor-generator', '#35e08a'], ['Energy store', 'Battery under the fuel cell', '#29d3ff'], ['Fuel cell', '100% sustainable fuel', '#ffb020'], ['Gearbox', '8-speed, Ferrari', '#b9bcc4'], ['Radiators', 'Inside each sidepod', '#7aa2ff']],
   specs: [
@@ -231,9 +237,16 @@ export const systems = [
   { id: 'fuel', name: 'Fuel system', stat: ['100', '% sustainable fuel'], text: 'A flexible, puncture-resistant fuel cell sits between the driver’s seat and the engine, low and central to keep the weight balance steady as it empties.', parts: ['Fuel cell', 'Filler', 'Lift pump'] },
   { id: 'cool', name: 'Cooling', stat: ['2', 'sidepod radiator packs'], text: 'Angled radiators in each sidepod cool the engine water and oil. The right-hand pod also carries the charge-air cooler that chills the turbo’s compressed air before it reaches the plenum.', parts: ['Radiators', 'Charge-air cooler', 'Coolant lines'] },
   { id: 'gbx', name: 'Gearbox and drive', stat: ['8', 'forward gears'], text: 'A carbon gearbox casing bolts to the back of the engine and carries the rear suspension, the rear crash structure and the rain light. Inside: the gear cluster, the differential and the driveshafts.', parts: ['Casing', 'Gear cluster', 'Clutch', 'Differential', 'Driveshafts', 'Crash structure'] },
-  { id: 'sus', name: 'Suspension and steering', stat: ['4', 'corners, double wishbones'], text: 'Carbon wishbones locate each wheel, with rods working dampers mounted inside the chassis and on top of the gearbox. The steering rack sits at the front bulkhead.', parts: ['Wishbones', 'Push and pull rods', 'Uprights', 'Dampers', 'Steering rack and column'] },
-  { id: 'brk', name: 'Brakes', stat: ['4', 'carbon discs'], text: 'Carbon discs and pads that work at up to around 1,000°C, hidden inside the wheels behind a carbon shroud. The rear brakes share the job with the MGU-K’s energy harvesting.', parts: ['Carbon discs', 'Calipers', 'Brake shrouds'] },
+  { id: 'sus', name: 'Suspension and steering', stat: ['4', 'corners, double wishbones'], text: 'Carbon wishbones locate each wheel. At the rear the car uses push-rods, according to technical analysis of the launch images, working dampers on top of the gearbox. The steering rack sits at the front bulkhead.', parts: ['Wishbones', 'Push and pull rods', 'Uprights', 'Dampers', 'Steering rack and column'] },
+  { id: 'brk', name: 'Brakes', stat: ['6', 'piston calipers'], text: 'Carbon discs and pads that work at up to around 1,000°C, hidden inside the wheels behind a carbon shroud. The rear brakes share the job with the MGU-K’s energy harvesting.', parts: ['Carbon discs', 'Calipers', 'Brake shrouds'] },
   { id: 'aero', name: 'Bodywork and aero', stat: ['2', 'active wings'], text: 'Front wing, rear wing, floor, sidepods and engine cover. For 2026 the floor is flatter, the car is narrower, and both wings open on the straights.', parts: ['Front wing', 'Rear wing', 'Floor and diffuser', 'Sidepods', 'Engine cover'] },
   { id: 'cell', name: 'Survival cell', stat: ['768', 'kg minimum, with driver'], text: 'The carbon monocoque the driver sits in, with the nose crash structure ahead of it and the halo above. Everything else on the car bolts to it.', parts: ['Monocoque', 'Nose structure', 'Halo', 'Seat'] },
-  { id: 'whl', name: 'Wheels and tyres', stat: ['18', 'inch wheels'], text: 'Open ten-spoke wheels with a single centre nut. The 2026 tyres are 25 mm narrower at the front and 30 mm narrower at the rear.', parts: ['Tyres', 'Wheels', 'Wheel nuts'] },
+  { id: 'whl', name: 'Wheels and tyres', stat: ['18', 'inch wheels'], text: 'Open spoked wheels with a single centre nut. The 2026 Pirellis are 705 mm tall and 280 mm wide at the front, 710 mm and 375 mm at the rear.', parts: ['Tyres', 'Wheels', 'Wheel nuts'] },
 ];
+
+// Audi's points per round (race plus sprint), for the fight-for-seventh chart.
+// Computed from Wikipedia's results tables; totals 28 after Round 20.
+export const audiByRound = [2, 0, 0, 0, 0, 0, 0, 0, 4, 4, 2, 4, 0, 1, 0, 0, 6, 0, 4, 1];
+
+// Where the team works, with the time zone for the live clocks on the team page.
+export const baseZones = { Kannapolis: 'America/New_York', Banbury: 'Europe/London', Maranello: 'Europe/Rome' };

@@ -163,6 +163,96 @@ const driverResults = (x) => {
   return `<div class="form" data-reveal><p class="label">2026 · race results</p><ul class="starts">${rs.map((c) => `<li><span class="r r--${cls(c.b[1])}">${res(c.b[1])}</span><b>${c.gp}</b><em>Round ${c.r} · ${c.date}</em></li>`).join('')}</ul></div>`;
 };
 
+const ran = d.calendar.filter((c) => c.a !== undefined);
+const haasPts = (c) => d.pts(c.a) + d.pts(c.sa, true) + d.pts(c.b[1]) + d.pts(c.sb, true);
+
+// Horizontal reel of every round: drag, scroll or use the arrows.
+const reel = () => `
+<div class="reel" data-reel>
+  <div class="reel__bar"><p class="label">All ${NR.total} rounds · drag or scroll</p><div class="reel__nav"><button data-reel-prev aria-label="Earlier rounds">${arrow}</button><button data-reel-next aria-label="Later rounds">${arrow}</button></div></div>
+  <ol class="reel__track" tabindex="0" aria-label="2026 rounds">
+    ${d.calendar
+      .map((c) => {
+        const up = c.a === undefined, p = up ? 0 : haasPts(c);
+        return `<li class="reel__c${c.next ? ' is-next' : ''}${up ? ' is-up' : ''}${p ? ' is-pts' : ''}"${c.next ? ' data-reel-next-race' : ''}>
+      <p class="label">${c.next ? '<span class="live"></span>Next' : 'Round'} ${pad(c.r)} · ${c.date}</p>
+      <h3 class="display">${c.gp.replace(' (in Malaysia)', '')}</h3>
+      <p class="reel__v">${c.venue}</p>
+      ${up ? `<p class="reel__tbc">${c.next ? NR.localLabel : 'To come'}</p>` : `<dl class="reel__r"><div><dt>Bearman</dt><dd class="r r--${cls(c.a)}">${res(c.a)}</dd></div><div><dt>${c.b[0]}</dt><dd class="r r--${cls(c.b[1])}">${res(c.b[1])}</dd></div></dl>`}
+      <p class="reel__p">${up ? '' : p ? `<b>+${p}</b> pts` : 'No points'}</p>
+    </li>`;
+      })
+      .join('')}
+  </ol>
+</div>`;
+
+// Cumulative points, Haas against Audi: a two-series line chart with a hover layer.
+const battle = () => {
+  const W = 1000, H = 360, L = 44, R = 96, T = 18, B = 40, n = NR.total, max = 35;
+  const hs = [0], au = [0];
+  ran.forEach((c, i) => { hs.push(hs[i] + haasPts(c)); au.push(au[i] + d.audiByRound[i]); });
+  const x = (i) => L + ((W - L - R) * i) / n, y = (v) => T + (H - T - B) * (1 - v / max);
+  const path = (a) => a.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  const last = ran.length;
+  const rows = ran.map((c, i) => ({ r: c.r, gp: c.gp, h: hs[i + 1], a: au[i + 1], dh: haasPts(c), da: d.audiByRound[i] }));
+  return `
+<figure class="chart" data-chart>
+  <figcaption class="chart__cap">
+    <ul class="chart__legend"><li><i style="background:var(--c-haas)"></i>Haas</li><li><i style="background:var(--c-audi)"></i>Audi</li></ul>
+    <p class="label">Cumulative points, race and sprint</p>
+  </figcaption>
+  <div class="chart__plot">
+    <div class="chart__scroll"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart of cumulative points by round. Haas leads Audi 31 to 28 after 20 rounds.">
+      ${[0, 10, 20, 30].map((v) => `<line class="chart__grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text class="chart__tick" x="${L - 10}" y="${y(v) + 4}" text-anchor="end">${v}</text>`).join('')}
+      ${[1, 5, 10, 15, 20, 23].map((i) => `<text class="chart__tick" x="${x(i)}" y="${H - 14}" text-anchor="middle">R${i}</text>`).join('')}
+      <rect class="chart__future" x="${x(last)}" y="${T}" width="${x(n) - x(last)}" height="${H - T - B}"/>
+      <text class="chart__tick" x="${(x(last) + x(n)) / 2}" y="${H - B - 10}" text-anchor="middle">To come</text>
+      <path class="chart__line" style="stroke:var(--c-audi)" pathLength="1" d="${path(au)}"/>
+      <path class="chart__line" style="stroke:var(--c-haas)" pathLength="1" d="${path(hs)}"/>
+      <circle class="chart__end" style="fill:var(--c-audi)" cx="${x(last)}" cy="${y(au[last])}" r="5"/>
+      <circle class="chart__end" style="fill:var(--c-haas)" cx="${x(last)}" cy="${y(hs[last])}" r="5"/>
+      <text class="chart__lab" x="${x(last) + 12}" y="${y(hs[last]) - 2}">Haas <tspan>${hs[last]}</tspan></text>
+      <text class="chart__lab" x="${x(last) + 12}" y="${y(au[last]) + 12}">Audi <tspan>${au[last]}</tspan></text>
+      <g class="chart__hover" hidden><line class="chart__cross" y1="${T}" y2="${H - B}"/><circle class="chart__dot" style="fill:var(--c-audi)" r="5"/><circle class="chart__dot" style="fill:var(--c-haas)" r="5"/></g>
+    </svg></div>
+    <div class="chart__tip" hidden></div>
+  </div>
+  <script type="application/json">${JSON.stringify({ W, H, L, R, T, B, n, max, rows })}</script>
+  <details class="chart__table"><summary>View the numbers as a table</summary>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Rd</th><th>Grand Prix</th><th class="num">Haas</th><th class="num">Audi</th><th class="num">Gap</th></tr></thead><tbody>${rows.map((q) => `<tr><td class="mono">${pad(q.r)}</td><td>${q.gp}</td><td class="num">${q.h}</td><td class="num">${q.a}</td><td class="num">${q.h - q.a > 0 ? '+' : ''}${q.h - q.a}</td></tr>`).join('')}</tbody></table></div>
+  </details>
+</figure>`;
+};
+
+// Bearman against Ocon across the 18 rounds they shared.
+const duel = () => {
+  const sh = ran.filter((c) => c.b[0] === 'Ocon');
+  const num = (v) => (typeof v === 'number' ? v : null);
+  const A = sh.map((c) => num(c.a)), O = sh.map((c) => num(c.b[1]));
+  const cnt = (f) => sh.filter(f).length, avg = (a) => { const v = a.filter((q) => q !== null); return (v.reduce((q, w) => q + w, 0) / v.length).toFixed(1); };
+  const ahead = cnt((c) => (num(c.a) ?? 99) < (num(c.b[1]) ?? 99)), behind = cnt((c) => (num(c.b[1]) ?? 99) < (num(c.a) ?? 99));
+  const rows = [
+    ['Finished ahead', ahead, behind, 1],
+    ['Points', sh.reduce((q, c) => q + d.pts(c.a) + d.pts(c.sa, true), 0), sh.reduce((q, c) => q + d.pts(c.b[1]), 0), 1],
+    ['Top-ten finishes', cnt((c) => d.pts(c.a) > 0), cnt((c) => d.pts(c.b[1]) > 0), 1],
+    ['Best finish', `P${Math.min(...A.filter((q) => q))}`, `P${Math.min(...O.filter((q) => q))}`, 0],
+    ['Average finish', avg(A), avg(O), -1],
+    ['Retirements', A.filter((q) => q === null).length, O.filter((q) => q === null).length, -1],
+  ];
+  return `
+<div class="duel" data-reveal>
+  <div class="duel__h"><b class="display">Bearman</b><span class="label">Rounds 1–18</span><b class="display">Ocon</b></div>
+  ${rows
+    .map(([l, a, b, dir]) => {
+      const fa = parseFloat(String(a).replace('P', '')), fb = parseFloat(String(b).replace('P', '')), m = Math.max(fa, fb) || 1;
+      const win = dir === 0 ? (fa < fb ? 'a' : fb < fa ? 'b' : '') : dir > 0 ? (fa > fb ? 'a' : fb > fa ? 'b' : '') : fa < fb ? 'a' : fb < fa ? 'b' : '';
+      return `<div class="duel__r${win === 'a' ? ' is-a' : win === 'b' ? ' is-b' : ''}${dir > 0 ? '' : ' no-bar'}"><span class="duel__v">${a}</span><i class="duel__bar duel__bar--a"><u style="--w:${(fa / m) * 100}%"></u></i><span class="duel__l">${l}</span><i class="duel__bar"><u style="--w:${(fb / m) * 100}%"></u></i><span class="duel__v">${b}</span></div>`;
+    })
+    .join('')}
+  <p class="fine">Race results only, except points, which include Bearman’s two sprint scores. For average finish and retirements, lower is better.</p>
+</div>`;
+};
+
 /* ---------- HOME ---------- */
 
 page(
@@ -195,6 +285,11 @@ page(
   </div>
 </section>
 ${champSection('02 · Standings')}
+
+<section class="sec sec--tight" id="reel">
+  <div class="wrap">${secHead('The season, round by round', 'Twenty down.')}</div>
+  ${reel()}
+</section>
 
 <section class="sec" id="drivers">
   <div class="wrap">
@@ -313,6 +408,13 @@ page(
       )
       .join('') +
     `
+<section class="sec">
+  <div class="wrap">
+    ${secHead('Head to head', 'Bearman v Ocon.', `<p class="sh__sub" data-reveal>Eighteen rounds in the same car. Bearman finished ahead more often and scored three times the points.</p>`)}
+    ${duel()}
+  </div>
+</section>
+
 <section class="sec sec--tight"><div class="wrap note" data-reveal>
   <p class="label">Line-up note</p>
   <p>Esteban Ocon raced for the team in Rounds 1–18 and scored 7 points. The team confirmed he will not return to a race seat this season. Teams may use four race drivers in a season and Haas has used four, so the seat alongside Oliver Bearman for Las Vegas, Qatar and Abu Dhabi goes to Ryo Hirakawa or Rafael Câmara. It had not been announced at the time of writing.</p>
@@ -367,6 +469,16 @@ page(
       </article>`
         )
         .join('')}
+      ${Object.entries(d.car.aeroCards)
+        .map(
+          ([k, a]) => `<article class="xp__card" data-card="aero-${k}">
+        <p class="label">Active aero</p>
+        <h2>${a.title}</h2>
+        <p class="xp__stat display">${a.stat[0]}<small>${a.stat[1]}</small></p>
+        <p>${a.text}</p>
+      </article>`
+        )
+        .join('')}
       ${d.systems
         .map(
           (y, i) => `<article class="xp__card" data-card="sys-${y.id}">
@@ -398,6 +510,12 @@ page(
         .join('')}
     </div>
     <p class="fine" data-reveal>Bars are an illustrative index (corner mode = 100), not measured team data.</p>
+    <ul class="moves">
+      <li data-reveal><p class="label">Front wing</p><h3>Two flaps drop</h3><p>The two upper flaps on each side rotate nose-up so their trailing edges fall flat. Analysis of the launch car suggests Haas drives them from one actuator under the nose.</p></li>
+      <li data-reveal><p class="label">Rear wing</p><h3>Two elements open</h3><p>The upper two of the three elements hinge so their leading edges lift, opening gaps that let air straight through.</p></li>
+      <li data-reveal><p class="label">Who decides</p><h3>The driver, then the car</h3><p>Straight mode is switched on by hand in marked zones. Braking or lifting puts the car back in corner mode by itself.</p></li>
+    </ul>
+    <p class="fine" data-reveal>Haas has not published its flap angles or actuator layout. The motion in the 3D model follows the 2026 rules and published analysis, not team data.</p>
   </div>
 </section>
 
@@ -473,9 +591,21 @@ page(
 
 ${champSection('02 · Standings')}
 
+<section class="sec" id="battle">
+  <div class="wrap">
+    ${secHead('03 · The fight for seventh', 'Three points in it.', `<p class="sh__sub" data-reveal>Haas banked 18 points in the first three rounds. Audi has outscored it 26 to 13 since, and arrives in Las Vegas three behind.</p>`)}
+    <div data-reveal>${battle()}</div>
+  </div>
+</section>
+
+<section class="sec sec--tight">
+  <div class="wrap">${secHead('04 · Round by round', 'The reel.')}</div>
+  ${reel()}
+</section>
+
 <section class="sec" id="calendar">
   <div class="wrap">
-    ${secHead('03 · Calendar and results', 'Every round.', `<div class="seg" role="group" aria-label="Filter rounds" data-reveal><button class="is-on" data-filter="all">All</button><button data-filter="points">Points</button><button data-filter="upcoming">Upcoming</button></div>`)}
+    ${secHead('05 · Calendar and results', 'Every round.', `<div class="seg" role="group" aria-label="Filter rounds" data-reveal><button class="is-on" data-filter="all">All</button><button data-filter="points">Points</button><button data-filter="upcoming">Upcoming</button></div>`)}
     <div class="tbl-wrap">
     <table class="tbl">
       <thead><tr><th>Rd</th><th>Grand Prix</th><th>Date</th><th>#87 Bearman</th><th>Second car</th><th class="num">Pts</th></tr></thead>
@@ -547,7 +677,7 @@ page(
 <section class="sec">
   <div class="wrap">
     ${secHead('05 · Bases', 'Three homes.')}
-    <ul class="people people--bases">${d.bases.map((b, i) => `<li data-reveal><p class="label">${pad(i + 1)} · ${b.role}</p><h3 class="display">${b.city}</h3><p>${b.region}</p></li>`).join('')}</ul>
+    <ul class="people people--bases">${d.bases.map((b, i) => `<li data-reveal><p class="label">${pad(i + 1)} · ${b.role}</p><h3 class="display">${b.city}</h3><p>${b.region}</p><p class="clock"><time data-tz="${d.baseZones[b.city]}">--:--</time><span>local time</span></p></li>`).join('')}</ul>
   </div>
 </section>
 

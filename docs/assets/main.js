@@ -107,6 +107,82 @@
     } catch (e) {}
   });
 
+  /* live local time at each base */
+  const clocks = $$('time[data-tz]');
+  if (clocks.length) {
+    const paint = () => clocks.forEach((el) => {
+      try { el.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: el.dataset.tz }).format(new Date()); } catch (e) {}
+    });
+    paint();
+    setInterval(paint, 15000);
+  }
+
+  /* cards that light up under the cursor, and portraits that lean toward it */
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine) {
+    $$('.face, .duo__c, .pgrid a, .people li, .tiles > div, .reel__c, .mode, .moves li').forEach((el) => {
+      el.classList.add('spot');
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', e.clientX - r.left + 'px');
+        el.style.setProperty('--my', e.clientY - r.top + 'px');
+      });
+    });
+    if (!reduce) $$('.face').forEach((el) => {
+      el.classList.add('tilt');
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'perspective(900px) rotateY(' + (px * 5).toFixed(2) + 'deg) rotateX(' + (-py * 4).toFixed(2) + 'deg)';
+      });
+      el.addEventListener('pointerleave', () => (el.style.transform = ''));
+    });
+  }
+
+  /* season reel: arrows, drag to scroll, and start on the next race */
+  $$('[data-reel]').forEach((reel) => {
+    const track = $('.reel__track', reel), prev = $('[data-reel-prev]', reel), next = $('[data-reel-next]', reel);
+    const step = () => Math.max(260, track.clientWidth * 0.7);
+    const sync = () => { prev.disabled = track.scrollLeft < 4; next.disabled = track.scrollLeft > track.scrollWidth - track.clientWidth - 4; };
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }));
+    track.addEventListener('scroll', sync, { passive: true });
+    const cur = $('[data-reel-next-race]', track);
+    if (cur) track.scrollLeft = Math.max(0, cur.offsetLeft - track.offsetLeft - track.clientWidth / 2 + cur.clientWidth / 2);
+    sync();
+    let down = false, x0 = 0, s0 = 0, moved = 0;
+    track.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = 0; x0 = e.clientX; s0 = track.scrollLeft; });
+    addEventListener('pointermove', (e) => { if (!down) return; moved = Math.abs(e.clientX - x0); if (moved > 4) track.classList.add('is-drag'); track.scrollLeft = s0 - (e.clientX - x0); });
+    addEventListener('pointerup', () => { down = false; track.classList.remove('is-drag'); });
+  });
+
+  /* line chart: crosshair and tooltip that follow the pointer, round by round */
+  $$('[data-chart]').forEach((fig) => {
+    const cfg = JSON.parse($('script[type="application/json"]', fig).textContent);
+    const svg = $('svg', fig), hover = $('.chart__hover', fig), tip = $('.chart__tip', fig), plot = $('.chart__plot', fig);
+    const cross = $('.chart__cross', hover), dots = $$('.chart__dot', hover);
+    const x = (i) => cfg.L + ((cfg.W - cfg.L - cfg.R) * i) / cfg.n, y = (v) => cfg.T + (cfg.H - cfg.T - cfg.B) * (1 - v / cfg.max);
+    const show = (clientX) => {
+      const r = svg.getBoundingClientRect();
+      const vx = ((clientX - r.left) / r.width) * cfg.W;
+      const i = Math.min(cfg.rows.length, Math.max(1, Math.round(((vx - cfg.L) / (cfg.W - cfg.L - cfg.R)) * cfg.n)));
+      const q = cfg.rows[i - 1];
+      hover.removeAttribute('hidden'); tip.hidden = false;
+      cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i));
+      dots[0].setAttribute('cx', x(i)); dots[0].setAttribute('cy', y(q.a));
+      dots[1].setAttribute('cx', x(i)); dots[1].setAttribute('cy', y(q.h));
+      tip.innerHTML = '<b>Round ' + q.r + ' · ' + q.gp + '</b>' +
+        '<p><i style="background:var(--c-haas)"></i>Haas<strong>' + q.h + '</strong><em>+' + q.dh + '</em></p>' +
+        '<p><i style="background:var(--c-audi)"></i>Audi<strong>' + q.a + '</strong><em>+' + q.da + '</em></p>';
+      const px = (x(i) / cfg.W) * r.width, w = tip.offsetWidth;
+      tip.style.left = Math.min(plot.clientWidth - w, Math.max(0, px + 14 + w > plot.clientWidth ? px - w - 14 : px + 14)) + 'px';
+    };
+    const hide = () => { hover.setAttribute('hidden', ''); tip.hidden = true; };
+    svg.addEventListener('pointermove', (e) => show(e.clientX));
+    svg.addEventListener('pointerdown', (e) => show(e.clientX));
+    svg.addEventListener('pointerleave', hide);
+  });
+
   /* season table filter */
   $$('[data-filter]').forEach((b) => b.addEventListener('click', () => {
     $$('[data-filter]').forEach((x) => x.classList.toggle('is-on', x === b));
