@@ -32,6 +32,29 @@
   addEventListener('keydown', (e) => e.key === 'Escape' && setMenu(false));
   $$('a', menu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
+  /* headings: split on line breaks so each line rises out of a mask */
+  $$('.sh__t, .phero__t').forEach((el) => {
+    el.innerHTML = el.innerHTML.split(/<br\s*\/?>/i).map((l, i) => `<span class="ln"><span style="--i:${i}">${l}</span></span>`).join('');
+  });
+  $$('.tbl-wrap').forEach((w) => { w.setAttribute('data-reveal', ''); $$('tbody tr', w).forEach((tr, i) => tr.style.setProperty('--i', i)); });
+
+  /* scroll progress bar and gentle parallax on full-bleed photos */
+  const prog = $('.prog');
+  const layers = reduce ? [] : $$('.hero__bg, .band__bg, .phero__bg');
+  const onMove = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    if (prog) prog.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
+    layers.forEach((el) => {
+      const r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const t = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+      el.style.transform = `translate3d(0, ${(t * -7).toFixed(2)}%, 0) scale(1.14)`;
+    });
+  };
+  addEventListener('scroll', onMove, { passive: true });
+  addEventListener('resize', onMove);
+  onMove();
+
   /* reveal on scroll */
   const io = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
@@ -65,7 +88,12 @@
     const dd = Math.floor(s / 86400); s -= dd * 86400;
     const hh = Math.floor(s / 3600); s -= hh * 3600;
     const mm = Math.floor(s / 60); s -= mm * 60;
-    cds.forEach((c) => { $('[data-u=d]', c).textContent = two(dd); $('[data-u=h]', c).textContent = two(hh); $('[data-u=m]', c).textContent = two(mm); $('[data-u=s]', c).textContent = two(s); });
+    cds.forEach((c) => [['d', dd], ['h', hh], ['m', mm], ['s', s]].forEach(([u, v]) => {
+      const el = $(`[data-u=${u}]`, c), txt = two(v);
+      if (el.textContent === txt) return;
+      el.textContent = txt;
+      if (!reduce) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+    }));
     shorts.forEach((el) => (el.textContent = over ? 'Lights out' : `${dd}d ${two(hh)}h ${two(mm)}m`));
   };
   tick();

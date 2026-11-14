@@ -46,6 +46,7 @@ ${three ? `<script type="importmap">{"imports":{"three":"./assets/vendor/three.m
 </head>
 <body data-page="${page}">
 <a class="skip" href="#main">Skip to content</a>
+<div class="prog" aria-hidden="true"></div>
 <header class="hdr">
   <a class="hdr__logo" href="index.html" aria-label="TGR Haas F1 Team, home">${logo}</a>
   <nav class="hdr__nav" aria-label="Main">${d.nav.slice(1).map((n) => `<a href="${n.href}"${n.href === page ? ' aria-current="page"' : ''}>${n.label}</a>`).join('')}</nav>
@@ -125,6 +126,38 @@ const standBlock = () => `
   <p class="fine">${d.site.asOf}</p>
 </div>`;
 
+const maxC = d.constructors[0][1];
+const champBlock = () => `<ol class="champ">${d.constructors
+  .map(([n, p], i) => `<li class="${n === 'Haas' ? 'is-us' : ''}" data-reveal><span>${pad(i + 1)}</span><b>${n}</b><i><u style="--w:${Math.max(0.4, (p / maxC) * 100)}%"></u></i><em>${p}</em></li>`)
+  .join('')}</ol>`;
+const driversBlock = () => `<ol class="champ champ--d">${d.driversTable
+  .map(([pos, n, t, p], i, a) => `${i && pos - a[i - 1][0] > 1 ? '<li class="gap" aria-hidden="true">···</li>' : ''}<li class="${t === 'Haas' ? 'is-us' : ''}" data-reveal><span>${pad(pos)}</span><b>${n}<small>${t}</small></b><em>${p}</em></li>`)
+  .join('')}</ol>`;
+const champSection = (label) => `
+<section class="sec" id="championship">
+  <div class="wrap">
+    ${secHead(label, 'Where we stand.', `<p class="sh__sub" data-reveal>Seventh, three points clear of Audi, with 69-point Alpine out of reach. Three races decide it.</p>`)}
+    <div class="champs">
+      <div><p class="label">Constructors · ${d.site.asOf}</p>${champBlock()}</div>
+      <div><p class="label">Drivers · leaders and the midfield</p>${driversBlock()}</div>
+    </div>
+  </div>
+</section>`;
+const lastBlock = () => `<div class="last" data-reveal><p class="label">Last race · Round ${d.lastRace.round} · ${d.lastRace.date}</p><h3 class="display">${d.lastRace.name}</h3><ul>${d.lastRace.results.map(([n, r]) => `<li><b>${r}</b><span>${n}</span></li>`).join('')}</ul><p>${d.lastRace.note}</p></div>`;
+const cls = (v) => (typeof v !== 'number' ? 'ret' : v <= 10 ? 'pts' : 'out');
+const res = (v) => (v === undefined ? '' : typeof v === 'number' ? `P${v}` : v);
+const formStrip = (label) => `<div class="form" data-reveal>
+  <p class="label">${label}</p>
+  <ol class="form__s">${d.calendar.map((c, i) => `<li class="${c.a === undefined ? 'tbd' : cls(c.a)}" style="--i:${i}" title="R${c.r} ${c.gp}: ${res(c.a) || 'to come'}"><b>${c.a === undefined ? '' : typeof c.a === 'number' ? c.a : 'R'}</b><span>${c.r}</span></li>`).join('')}</ol>
+  <p class="fine"><i class="k pts"></i>Points <i class="k out"></i>Classified <i class="k ret"></i>Retired <i class="k tbd"></i>To come</p>
+</div>`;
+const driverResults = (x) => {
+  if (x.code === 'a') return formStrip('2026 · race finish by round');
+  const rs = d.calendar.filter((c) => c.b && c.b[0] === x.who);
+  if (!rs.length) return '';
+  return `<div class="form" data-reveal><p class="label">2026 · race results</p><ul class="starts">${rs.map((c) => `<li><span class="r r--${cls(c.b[1])}">${res(c.b[1])}</span><b>${c.gp}</b><em>Round ${c.r} · ${c.date}</em></li>`).join('')}</ul></div>`;
+};
+
 /* ---------- HOME ---------- */
 
 page(
@@ -150,34 +183,36 @@ page(
   <div class="wrap">
     ${secHead('01 · This week', 'Three to go.<br>Seventh to defend.')}
     <div class="now">${raceBlock()}${standBlock()}</div>
+    ${lastBlock()}
   </div>
 </section>
+${champSection('02 · Standings')}
 
-<section class="sec sec--flush" id="drivers">
-  <div class="wrap">${secHead('02 · Drivers', 'Who drives.', `<p class="sh__sub" data-reveal>Bearman leads the scoring. With four drivers used this season, the limit, the second seat for the last three rounds goes to Hirakawa or Câmara.</p>`)}</div>
-  <div class="dlist">
-    ${d.drivers
-      .filter((x) => !x.homeHide)
-      .map(
-        (x) => `
-    <a class="drow" href="drivers.html#${x.id}" data-reveal>
-      ${photo(x.photo, { cls: 'drow__ph', sizes: '(min-width: 900px) 55vw, 100vw', cap: false })}
-      <div class="drow__in">
-        <p class="label">${x.role}${x.num ? ` · #${x.num}` : ''}</p>
-        <h3 class="display drow__n"><small>${x.first}</small>${x.last}</h3>
-        <p class="drow__line">${x.line}</p>
-        <dl class="facts">${x.stats.slice(0, 3).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
-        <span class="cta"><span>Profile</span>${arrow}</span>
-      </div>
-    </a>`
-      )
-      .join('')}
+<section class="sec" id="drivers">
+  <div class="wrap">
+    ${secHead('03 · Drivers', 'Who drives.', `<p class="sh__sub" data-reveal>Bearman leads the scoring. With four race drivers used this season, the limit, the second seat for the last three rounds goes to Hirakawa or Câmara.</p>`)}
+    <div class="faces">
+      ${d.drivers
+        .map(
+          (x, i) => `
+      <a class="face" href="drivers.html#${x.id}" data-reveal style="--d:${i * 90}ms">
+        ${photo(x.portrait, { cls: 'face__ph', sizes: '(min-width: 900px) 25vw, 50vw', cap: false })}
+        <div class="face__in">
+          <p class="label">${x.role}${x.num ? ` · #${x.num}` : ''}</p>
+          <h3 class="display"><small>${x.first}</small>${x.last}</h3>
+          <dl class="facts">${x.stats.slice(0, 2).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+        </div>
+      </a>`
+        )
+        .join('')}
+    </div>
+    <p class="fine">Portraits: Wikimedia Commons, see <a href="credits.html">photo credits</a>. Some pre-date the driver joining the team.</p>
   </div>
 </section>
 
 <section class="sec carsec" id="car" data-car-ui>
   <div class="wrap carsec__head">
-    ${secHead('03 · The machine', 'VF-26', `<p class="sh__sub" data-reveal>${d.car.intro}</p>`)}
+    ${secHead('04 · The machine', 'VF-26', `<p class="sh__sub" data-reveal>${d.car.intro}</p>`)}
   </div>
   <div class="stage" data-car3d="teaser" aria-label="Interactive 3D model of the VF-26. Drag to rotate.">
     <p class="stage__hint">Drag to rotate</p>
@@ -191,7 +226,7 @@ page(
 
 <section class="sec" id="news">
   <div class="wrap">
-    ${secHead('04 · News', 'From the garage.')}
+    ${secHead('05 · News', 'From the garage.')}
     <div class="news">
       <a class="news__lead" href="#news" data-reveal>
         ${photo(d.news[0].photo, { cls: 'news__ph', sizes: '(min-width: 900px) 50vw, 100vw', cap: false })}
@@ -209,7 +244,7 @@ page(
 <section class="band">
   ${photo('bear3', { cls: 'band__bg', pos: '50% 60%' })}
   <div class="wrap band__in">
-    <p class="label" data-reveal>05 · Who we are</p>
+    <p class="label" data-reveal>06 · Who we are</p>
     <p class="display band__t" data-reveal>The smallest team on the grid. Built across three countries. Racing the biggest names in motorsport since 2016.</p>
     <div class="band__row" data-reveal>
       <dl class="facts facts--lg"><div><dt>First race</dt><dd>2016</dd></div><div><dt>Best result</dt><dd>P4</dd></div><div><dt>Bases</dt><dd>3</dd></div></dl>
@@ -220,14 +255,14 @@ page(
 
 <section class="sec" id="store">
   <div class="wrap duo">
-    <a class="duo__c" href="#store" data-reveal><p class="label">06 · Store</p><h3 class="display">The 2026 kit</h3><p>Team polo, race-day jacket and caps, by Castore.</p><span class="cta"><span>Shop the collection</span>${arrow}</span></a>
-    <a class="duo__c" href="#store" data-reveal><p class="label">07 · Fan club</p><h3 class="display">Join the pit crew</h3><p>Free membership, ticket ballots and behind-the-garage films.</p><span class="cta"><span>Become a member</span>${arrow}</span></a>
+    <a class="duo__c" href="#store" data-reveal><p class="label">07 · Store</p><h3 class="display">The 2026 kit</h3><p>Team polo, race-day jacket and caps, by Castore.</p><span class="cta"><span>Shop the collection</span>${arrow}</span></a>
+    <a class="duo__c" href="#store" data-reveal><p class="label">08 · Fan club</p><h3 class="display">Join the pit crew</h3><p>Free membership, ticket ballots and behind-the-garage films.</p><span class="cta"><span>Become a member</span>${arrow}</span></a>
   </div>
 </section>
 
 <section class="sec sec--tight">
   <div class="wrap">
-    <div class="pstrip__h"><p class="label">08 · Partners</p>${link('partners.html', 'All partners')}</div>
+    <div class="pstrip__h"><p class="label">09 · Partners</p>${link('partners.html', 'All partners')}</div>
     <ul class="pstrip">${d.partners.flatMap((t) => t.items).map(([n]) => `<li>${n}</li>`).join('')}</ul>
   </div>
 </section>
@@ -255,7 +290,7 @@ page(
       </div>
       ${x.num ? `<p class="prof__num display" aria-label="Car number ${x.num}">${x.num}</p>` : ''}
     </div>
-    ${x.photo ? `<div class="prof__media" data-reveal>${photo(x.photo, { cls: 'prof__ph', sizes: '(min-width: 1000px) 62vw, 100vw' })}${x.photo2 ? photo(x.photo2, { cls: 'prof__ph prof__ph--b', sizes: '(min-width: 1000px) 36vw, 100vw' }) : ''}</div>${x.photoNote ? `<p class="fine">${x.photoNote}.</p>` : ''}` : ''}
+    <div class="prof__media" data-reveal>${photo(x.portrait, { cls: 'prof__ph prof__ph--p', sizes: '(min-width: 1000px) 34vw, 100vw' })}${photo(x.photo, { cls: 'prof__ph', sizes: '(min-width: 1000px) 62vw, 100vw' })}</div>${x.photoNote ? `<p class="fine">${x.photoNote}.</p>` : ''}
     <div class="prof__grid">
       <div>
         <p class="prof__line" data-reveal>${x.line}</p>
@@ -267,6 +302,7 @@ page(
         <ol class="tl">${x.timeline.map(([y, t]) => `<li data-reveal><b>${y}</b><span>${t}</span></li>`).join('')}</ol>
       </div>
     </div>
+    ${driverResults(x)}
   </div>
 </section>`
       )
@@ -373,8 +409,6 @@ page(
 /* ---------- SEASON ---------- */
 
 const done = d.calendar.filter((c) => c.a !== undefined);
-const cls = (v) => (typeof v !== 'number' ? 'ret' : v <= 10 ? 'pts' : 'out');
-const res = (v) => (v === undefined ? '' : typeof v === 'number' ? `P${v}` : v);
 const racePts = (c) => d.pts(c.a) + d.pts(c.sa, true) + d.pts(c.b[1]) + d.pts(c.sb, true);
 const bea = done.map((c) => c.a);
 const fin = bea.filter((v) => typeof v === 'number');
@@ -404,17 +438,15 @@ page(
   <div class="wrap">
     ${secHead('01 · The season in numbers', 'So far.')}
     <dl class="tiles tiles--6">${tiles.map(([k, v]) => `<div data-reveal><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
-    <div class="form" data-reveal>
-      <p class="label">Bearman · race finish by round</p>
-      <ol class="form__s">${d.calendar.map((c) => `<li class="${c.a === undefined ? 'tbd' : cls(c.a)}" title="R${c.r} ${c.gp}: ${res(c.a) || 'to come'}"><b>${c.a === undefined ? '' : typeof c.a === 'number' ? c.a : 'R'}</b><span>${c.r}</span></li>`).join('')}</ol>
-      <p class="fine"><i class="k pts"></i>Points <i class="k out"></i>Classified <i class="k ret"></i>Retired <i class="k tbd"></i>To come</p>
+    ${formStrip('Bearman · race finish by round')}
     </div>
-  </div>
 </section>
+
+${champSection('02 · Standings')}
 
 <section class="sec" id="calendar">
   <div class="wrap">
-    ${secHead('02 · Calendar and results', 'Every round.', `<div class="seg" role="group" aria-label="Filter rounds" data-reveal><button class="is-on" data-filter="all">All</button><button data-filter="points">Points</button><button data-filter="upcoming">Upcoming</button></div>`)}
+    ${secHead('03 · Calendar and results', 'Every round.', `<div class="seg" role="group" aria-label="Filter rounds" data-reveal><button class="is-on" data-filter="all">All</button><button data-filter="points">Points</button><button data-filter="upcoming">Upcoming</button></div>`)}
     <div class="tbl-wrap">
     <table class="tbl">
       <thead><tr><th>Rd</th><th>Grand Prix</th><th>Date</th><th>#87 Bearman</th><th>Second car</th><th class="num">Pts</th></tr></thead>
@@ -468,21 +500,31 @@ page(
 
 <section class="sec">
   <div class="wrap">
-    ${secHead('03 · Leadership', 'Who’s in charge.')}
+    ${secHead('03 · Season by season', 'Eleven years.', `<p class="sh__sub" data-reveal>Points and championship position for every car the team has built.</p>`)}
+    <div class="seasons" role="table" aria-label="Haas results by season">
+      <div class="seasons__r seasons__r--h" role="row"><span role="columnheader">Year</span><span role="columnheader">Car</span><span role="columnheader">Points</span><span role="columnheader">Position</span></div>
+      ${d.history.map(([y, c, p, pos, n]) => `<div class="seasons__r${pos === 5 ? ' is-best' : ''}" role="row" data-reveal><b role="cell" class="display">${y}</b><span role="cell">${c}${n ? `<em>${n}</em>` : ''}</span><span role="cell" class="seasons__b"><i><u style="--w:${(p / Math.max(...d.history.map((h) => h[2]))) * 100}%"></u></i><b>${p}</b></span><span role="cell" class="seasons__p">P${pos}</span></div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    ${secHead('04 · Leadership', 'Who’s in charge.')}
     <ul class="people">${d.leadership.map(([n, r]) => `<li data-reveal><p class="label">${r}</p><h3 class="display">${n}</h3></li>`).join('')}</ul>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    ${secHead('04 · Bases', 'Three homes.')}
+    ${secHead('05 · Bases', 'Three homes.')}
     <ul class="people people--bases">${d.bases.map((b, i) => `<li data-reveal><p class="label">${pad(i + 1)} · ${b.role}</p><h3 class="display">${b.city}</h3><p>${b.region}</p></li>`).join('')}</ul>
   </div>
 </section>
 
 <section class="sec" id="careers">
   <div class="wrap">
-    ${secHead('05 · Careers', 'Come and build it.', `<p class="sh__sub" data-reveal>On a small team your work reaches the car quickly, and everyone can see whose it was.</p>`)}
+    ${secHead('06 · Careers', 'Come and build it.', `<p class="sh__sub" data-reveal>On a small team your work reaches the car quickly, and everyone can see whose it was.</p>`)}
     <ul class="jobs">${d.careers.map(([t, l]) => `<li data-reveal><a href="#careers"><span>${t}</span><em>${l}</em>${arrow}</a></li>`).join('')}</ul>
   </div>
 </section>

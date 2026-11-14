@@ -129,7 +129,7 @@ const span = (a, b, n) => Array.from({ length: n + 1 }, (_, i) => a + ((b - a) *
 const LX0 = -2.75, LX1 = 2.95, LY1 = 1.06;
 const liveryUV = (x, y) => [(x - LX0) / (LX1 - LX0), y / LY1];
 
-function liveryTexture() {
+function liveryTexture(side = 0) {
   const W = 2048, H = 512, c = document.createElement('canvas');
   c.width = W; c.height = H;
   const g = c.getContext('2d');
@@ -148,6 +148,16 @@ function liveryTexture() {
   g.fillStyle = '#d4001f';
   g.beginPath(); g.moveTo(X(0.1), Y(1.06)); g.lineTo(X(-0.32), Y(1.06)); g.lineTo(X(-0.55), Y(0.74)); g.lineTo(X(-0.02), Y(0.74)); g.closePath(); g.fill();
   g.fillRect(X(2.62), 0, W, H);
+  if (side) {
+    // team lettering on the sidepod, mirrored for the left side so it reads correctly
+    g.save();
+    g.translate(X(-0.32), Y(0.215));
+    if (side < 0) g.scale(-1, 1);
+    g.fillStyle = '#f3f1ec'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = 'italic 900 62px "Archx", "Arial Black", sans-serif';
+    g.fillText('HAAS', 0, 0);
+    g.restore();
+  }
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; t.flipY = true;
   return t;
@@ -168,14 +178,15 @@ function numberTexture(txt, fg, bg) {
 
 export function buildCar() {
   const car = new THREE.Group();
-  const paint = new THREE.MeshPhysicalMaterial({ map: liveryTexture(), roughness: 0.34, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.12 });
+  const mkPaint = (side) => new THREE.MeshPhysicalMaterial({ map: liveryTexture(side), roughness: 0.34, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.12 });
+  const paint = mkPaint(0), paintR = mkPaint(1), paintL = mkPaint(-1);
   const white = new THREE.MeshPhysicalMaterial({ color: 0xf3f1ec, roughness: 0.34, clearcoat: 1, clearcoatRoughness: 0.12, side: THREE.DoubleSide });
   const red = new THREE.MeshPhysicalMaterial({ color: RED, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.1, side: THREE.DoubleSide });
   const carbon = new THREE.MeshPhysicalMaterial({ color: 0x101012, roughness: 0.42, metalness: 0.35, clearcoat: 0.5, clearcoatRoughness: 0.3, side: THREE.DoubleSide });
   const matte = new THREE.MeshStandardMaterial({ color: 0x050506, roughness: 0.95 });
   const rubber = new THREE.MeshStandardMaterial({ color: 0x0b0b0c, roughness: 0.86 });
   const metal = new THREE.MeshStandardMaterial({ color: 0x8a8d92, roughness: 0.28, metalness: 1 });
-  const skin = [paint, white, red, carbon]; // faded in x-ray mode
+  const skin = [paint, paintR, paintL, white, red, carbon]; // faded in x-ray mode
 
   const part = (name, explode) => {
     const g = new THREE.Group(); g.name = name; g.userData.explode = explode || V(0, 0, 0); car.add(g); return g;
@@ -226,7 +237,7 @@ export function buildCar() {
     m.position.set(-1.43, 0.585, s * 0.0115); m.rotation.y = s > 0 ? 0 : Math.PI; cover.add(m);
   });
   // onboard camera pod
-  add(cover, loft([{ x: 0.0, w: 0.012, y0: 0.985, y1: 1.0 }, { x: -0.08, w: 0.03, y0: 0.975, y1: 1.012 }, { x: -0.2, w: 0.012, y0: 0.985, y1: 1.0 }], { segs: 16, sub: 4 }), carbon);
+  add(cover, loft([{ x: 0.0, w: 0.012, y0: 0.985, y1: 1.0 }, { x: -0.08, w: 0.03, y0: 0.975, y1: 1.012 }, { x: -0.2, w: 0.012, y0: 0.985, y1: 1.0 }], { segs: 16, sub: 4 }), new THREE.MeshStandardMaterial({ color: 0xd8f000, roughness: 0.5 }));
   [0.11, -0.11].forEach((z) => add(cover, new THREE.BoxGeometry(0.1, 0.012, 0.09).translate(-0.08, 0.992, z), carbon));
 
   /* --- sidepods --- */
@@ -241,7 +252,7 @@ export function buildCar() {
       { x: -1.25, cz: 0.32 * s, w: 0.18, y0: 0.075, y1: 0.34, n: 2.5, flat: 0.2 },
       { x: -1.6, cz: 0.22 * s, w: 0.125, y0: 0.08, y1: 0.235, n: 2.4 },
       { x: -1.92, cz: 0.14 * s, w: 0.07, y0: 0.09, y1: 0.17, n: 2.2 },
-    ], { segs: 44, uv: liveryUV }), paint);
+    ], { segs: 44, uv: liveryUV }), s > 0 ? paintR : paintL);
     const inlet = add(g, new THREE.CircleGeometry(1, 32), matte, false);
     inlet.scale.set(0.135, 0.085, 1); inlet.rotation.y = Math.PI / 2; inlet.position.set(0.664, 0.445, 0.5 * s);
     // mirror on its stalk
@@ -352,9 +363,9 @@ export function buildCar() {
     // outboard wheel cover with a shallow dish, compound ring and wheel nut
     const cov = new THREE.Mesh(new THREE.LatheGeometry([[0.0, 0.05], [0.06, 0.05], [0.07, 0.03], [0.2, 0.012], [0.238, 0.0]].map(([r, a]) => new THREE.Vector2(r, a)), 48).rotateX(Math.PI / 2), carbon);
     cov.position.z = h - 0.035; g.add(cov);
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.288, 0.0075, 8, 72), new THREE.MeshBasicMaterial({ color: 0xf2f0ea }));
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.288, 0.0075, 8, 72), new THREE.MeshBasicMaterial({ color: 0xffd21a }));
     ring.position.z = h - 0.002; g.add(ring);
-    const band = new THREE.Mesh(new THREE.RingGeometry(0.2, 0.226, 64), new THREE.MeshBasicMaterial({ color: RED, side: THREE.DoubleSide }));
+    const band = new THREE.Mesh(new THREE.RingGeometry(0.214, 0.226, 64), new THREE.MeshBasicMaterial({ color: 0xffd21a, side: THREE.DoubleSide }));
     band.position.z = h - 0.018; g.add(band);
     const nut = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.04, 0.05, 6).rotateX(Math.PI / 2), metal); nut.position.z = h + 0.005; g.add(nut);
     // inboard brake drum
@@ -482,7 +493,7 @@ function mount(el) {
   new ResizeObserver(resize).observe(el); resize();
 
   /* state that eases toward targets */
-  const st = { aero: 0, aeroT: 0, xray: 0, xrayT: 0, exp: 0, expT: 0, fly: null, steer: 0, steerT: 0 };
+  const st = { spin: 0, roll: 0, aero: 0, aeroT: 0, xray: 0, xrayT: 0, exp: 0, expT: 0, fly: null, steer: 0, steerT: 0 };
   const flyTo = (name) => {
     const v = VIEWS[name]; if (!v) return;
     st.fly = { p: new THREE.Vector3(...v.pos).multiplyScalar(1), t: new THREE.Vector3(...v.tgt), k: 0 };
@@ -532,7 +543,10 @@ function mount(el) {
 
     M.flaps.forEach((f) => (f.pivot.rotation.z = f.open * st.aero));
     M.parts.forEach((p) => p.position.copy(p.userData.explode).multiplyScalar(st.exp));
-    M.wheels.forEach((w) => { if (w.front) w.steer.rotation.y = st.steer; });
+    // straight mode: the car is "at speed", so the wheels turn and the floor grid streams past
+    st.spin = ease(st.spin, st.aeroT * 26, k * 0.5); st.roll += st.spin * dt;
+    M.wheels.forEach((w) => { if (w.front) w.steer.rotation.y = st.steer * (1 - st.aero); w.wh.rotation.z = (w.s > 0 ? -1 : 1) * st.roll; });
+    grid.position.x = -((st.roll * 0.36) % 0.5);
     const op = 1 - 0.9 * st.xray;
     M.skin.forEach((m) => { const tr = st.xray > 0.01; if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; } m.opacity = op; m.depthWrite = st.xray < 0.5; });
     M.inner.visible = st.xray > 0.02;
@@ -540,11 +554,11 @@ function mount(el) {
     M.rain.material.emissiveIntensity = 1.6 + Math.sin(now / 180) * 1.2;
 
     if (st.fly) {
-      st.fly.k = Math.min(1, st.fly.k + dt * 1.1);
+      st.fly.k = Math.min(1, st.fly.k + dt * (st.fly.spin ? 0.5 : 1.1));
       const e = 1 - Math.pow(1 - st.fly.k, 3) > 0.999 ? 1 : k * 0.9;
       tmp.copy(st.fly.p).sub(st.fly.t).multiplyScalar(fit).add(st.fly.t);
       camera.position.lerp(tmp, e); ctl.target.lerp(st.fly.t, e);
-      if (st.fly.k >= 1 && camera.position.distanceTo(tmp) < 0.02) st.fly = null;
+      if (st.fly.k >= 1 && camera.position.distanceTo(tmp) < 0.05) { if (st.fly.spin && !el.classList.contains('is-touched')) ctl.autoRotate = true; st.fly = null; }
     }
     ctl.update();
 
@@ -562,7 +576,9 @@ function mount(el) {
     renderer.render(scene, camera);
   };
   // first frame: frame the car for this aspect ratio
-  camera.position.sub(ctl.target).multiplyScalar(fit).add(ctl.target);
+  camera.position.set(-7.5, 4.2, 9.5).sub(ctl.target).multiplyScalar(fit).add(ctl.target);
+  if (reduce) camera.position.set(...start.pos).sub(ctl.target).multiplyScalar(fit).add(ctl.target);
+  else { flyTo('hero'); st.fly.spin = true; }
   (document.fonts && document.fonts.load ? document.fonts.load('italic 900 100px Archx') : Promise.resolve()).catch(() => {}).then(() => {
     el.classList.add('is-ready');
     requestAnimationFrame(frame);

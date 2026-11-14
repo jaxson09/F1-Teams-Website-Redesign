@@ -8,11 +8,11 @@ Dark, photo-led design with one typeface (Archivo, at two widths), one accent co
 
 | Page | What's on it |
 | --- | --- |
-| `index.html` | Photo hero, next-race countdown, standings, drivers, 3D car teaser, news, store, fan club, partners |
-| `drivers.html` | Profiles with photos: Bearman, Câmara, Hirakawa, Doohan |
+| `index.html` | Photo hero, next-race countdown, last race, championship tables, driver portraits, 3D car teaser, news, store, fan club, partners |
+| `drivers.html` | Profiles with portraits, car photos and 2026 results: Bearman, Câmara, Hirakawa, Doohan |
 | `car.html` | 3D explorer (hotspots, camera views, active-aero modes, x-ray, exploded view), 2025 v 2026 comparison, tech sheet, photo gallery |
 | `season.html` | Countdown, standings, season stats, every result for both cars, filterable calendar |
-| `team.html` | Origin, history, leadership, bases, careers |
+| `team.html` | Origin, history, season-by-season record, leadership, bases, careers |
 | `partners.html` | Partner tiers |
 | `credits.html` | Photo credits and licences |
 
@@ -35,11 +35,11 @@ To publish on GitHub Pages: Settings → Pages → deploy from branch, folder `/
 
 ## The 3D car
 
-The car is an original model generated in code with three.js (lofted body sections, aerofoil wings, lathed tyres). It is not a scan or CAD of the real VF-26 and its livery is an approximation without sponsor logos.
+The car is an original model generated in code with three.js (lofted body sections, aerofoil wings, lathed tyres). It is built to the real overall dimensions, but it is not a scan or CAD of the real VF-26, and its livery is an approximation without sponsor logos. To use a purchased artist-made model instead, load its `.glb` in `car3d.js` in place of `buildCar()`.
 
 ## Photos
 
-All photographs come from Wikimedia Commons under Creative Commons licences (mostly CC BY-SA 4.0, by Lukas Raich). They were resized; they remain under their original licences. Full credits are on `credits.html` and in `src/data.mjs`. If you reuse them, keep the attribution and licence.
+All photographs come from Wikimedia Commons under Creative Commons licences (mostly CC BY-SA 4.0). Some driver portraits pre-date the driver joining the team. They were resized; they remain under their original licences. Full credits are on `credits.html` and in `src/data.mjs`. If you reuse them, keep the attribution and licence.
 
 ## Data notes
 

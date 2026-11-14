@@ -22,6 +22,7 @@ export const photos = {
   hira1: { alt: 'Ryo Hirakawa driving the Haas VF-26 in practice at the Red Bull Ring', by: 'Lukas Raich', lic: 'CC BY-SA 4.0', file: 'FIA F1 Austria 2026 Nr. 50 Hirakawa (1).jpg', ratio: '2 / 1', where: 'Austrian GP 2026 · FP1' },
   hira2: { alt: 'Ryo Hirakawa’s Haas VF-26 turning in at the Red Bull Ring', by: 'Lukas Raich', lic: 'CC BY-SA 4.0', file: 'FIA F1 Austria 2026 Nr. 50 Hirakawa (2).jpg', ratio: '3 / 2', where: 'Austrian GP 2026 · FP1' },
   cam1: { alt: 'Rafael Câmara in his Invicta Formula 2 car at the Red Bull Ring', by: 'Lukas Raich', lic: 'CC BY-SA 4.0', file: 'FIA F2 Austria 2026 Nr. 1 Câmara (1).jpg', ratio: '16 / 9', where: 'FIA F2 · Austria 2026' },
+  bearP: { alt: 'Oliver Bearman in Haas team kit', by: 'Liauzh', lic: 'CC BY-SA 4.0', file: '2025 Japan GP - Haas - Oliver Bearman - Thursday.jpg', where: 'Japanese GP 2025' },
   hiraP: { alt: 'Ryo Hirakawa in Toyota Gazoo Racing team kit', by: 'Morio', lic: 'CC BY-SA 4.0', file: 'Ryo Hirakawa 2024 WEC Fuji 1.jpg', where: 'WEC Fuji 2024' },
   camP: { alt: 'Rafael Câmara, pictured in 2022', by: 'KVYTICAL', lic: 'CC BY-SA 4.0', file: 'Rafael Câmara in 2022.jpg', where: '2022' },
   doohP: { alt: 'Jack Doohan, pictured in 2023', by: 'Byxelized', lic: 'CC0', file: 'Jack Doohan 2023.jpg', where: '2023' },
@@ -88,7 +89,7 @@ export const pts = (pos, sprint) => (typeof pos === 'number' ? (sprint ? SP_PTS 
 export const drivers = [
   {
     id: 'bearman', first: 'Oliver', last: 'Bearman', num: '87', role: 'Race driver', country: 'Great Britain', cc: 'GBR',
-    born: '8 May 2005', place: 'Chelmsford, England', photo: 'bear1', photo2: 'bear4',
+    born: '8 May 2005', place: 'London, England', photo: 'bear1', photo2: 'bear4', portrait: 'bearP', code: 'a',
     line: 'Fifth in Shanghai. Twenty-three of the team’s thirty-one points.',
     stats: [['2026 points', '23'], ['Championship', 'P13'], ['Best finish', 'P5'], ['Points finishes', '4 + 2 sprints']],
     bio: [
@@ -99,7 +100,7 @@ export const drivers = [
   },
   {
     id: 'camara', first: 'Rafael', last: 'Câmara', num: '51', role: 'Race driver 2027', country: 'Brazil', cc: 'BRA',
-    born: '5 May 2005', place: 'Recife, Brazil', photo: 'cam1', photo2: 'camP', photoNote: 'Pictured in his 2026 Formula 2 car, and in 2022',
+    born: '5 May 2005', place: 'Recife, Brazil', photo: 'cam1', portrait: 'camP', photoNote: 'Portrait from 2022. Car photo shows his 2026 Formula 2 car', who: 'Câmara',
     line: 'Confirmed for 2027. Made his debut a season early, at home.',
     stats: [['F1 debut', 'São Paulo 2026'], ['Debut result', 'P20'], ['2027', 'Race seat'], ['Title', 'FIA F3 2025']],
     bio: [
@@ -110,7 +111,7 @@ export const drivers = [
   },
   {
     id: 'hirakawa', first: 'Ryo', last: 'Hirakawa', num: '50', role: 'Reserve driver', country: 'Japan', cc: 'JPN',
-    born: '7 March 1994', place: 'Kure, Japan', photo: 'hira1', photo2: 'hiraP',
+    born: '7 March 1994', place: 'Kure, Japan', photo: 'hira1', portrait: 'hiraP', who: 'Hirakawa',
     line: 'One Grand Prix start. One point.',
     stats: [['GP starts', '1'], ['Points', '1'], ['Mexico City 2026', 'P10'], ['Le Mans', 'Winner 2022']],
     bio: [
@@ -121,7 +122,7 @@ export const drivers = [
   },
   {
     id: 'doohan', first: 'Jack', last: 'Doohan', num: '', role: 'Reserve driver', country: 'Australia', cc: 'AUS',
-    born: '20 January 2003', place: 'Gold Coast, Australia', photo: 'doohA', photo2: 'doohP', photoNote: 'Pictured driving for Alpine in 2025, and in 2023', homeHide: true,
+    born: '20 January 2003', place: 'Gold Coast, Australia', photo: 'doohA', portrait: 'doohP', photoNote: 'Portrait from 2023. Car photo shows him driving for Alpine in 2025',
     line: 'Simulator and garage support for the race team.',
     stats: [['Role', 'Reserve'], ['Joined', '2026'], ['F1 debut', 'Abu Dhabi 2024'], ['F2', '3rd · 2023']],
     bio: ['The Australian joined for 2026 as reserve driver after racing in Formula 1 with Alpine, and supports the race team from the simulator and the garage.'],
@@ -199,3 +200,26 @@ export const partners = [
 ];
 
 export const careers = [['Aerodynamics', 'Maranello'], ['Vehicle Performance', 'Banbury'], ['Composites & Manufacturing', 'Banbury'], ['Race Team', 'Travelling'], ['Partnerships & Marketing', 'Kannapolis'], ['Early Careers', 'All sites']];
+
+// 2026 Constructors' Championship after Round 20 (from Wikipedia's standings tables).
+export const constructors = [
+  ['Mercedes', 652], ['Ferrari', 510], ['Red Bull', 415], ['McLaren', 398], ['Racing Bulls', 114], ['Alpine', 69],
+  ['Haas', 31], ['Audi', 28], ['Williams', 12], ['Aston Martin', 7], ['Cadillac', 0],
+];
+
+// Drivers' Championship: the leaders, and the midfield fight around Bearman.
+export const driversTable = [
+  [1, 'Kimi Antonelli', 'Mercedes', 390], [2, 'Max Verstappen', 'Red Bull', 279], [3, 'George Russell', 'Mercedes', 262],
+  [10, 'Pierre Gasly', 'Alpine', 42], [11, 'Arvid Lindblad', 'Racing Bulls', 38], [12, 'Franco Colapinto', 'Alpine', 27],
+  [13, 'Oliver Bearman', 'Haas', 23], [14, 'Gabriel Bortoleto', 'Audi', 14], [15, 'Nico Hülkenberg', 'Audi', 14],
+  [16, 'Esteban Ocon', 'Haas', 7], [21, 'Ryo Hirakawa', 'Haas', 1], [25, 'Rafael Câmara', 'Haas', 0],
+];
+
+// Season by season: [year, car, points, championship position, note]
+export const history = [
+  [2016, 'VF-16', 29, 8, 'Points on debut'], [2017, 'VF-17', 47, 8, ''], [2018, 'VF-18', 93, 5, 'Best season'], [2019, 'VF-19', 28, 9, ''],
+  [2020, 'VF-20', 3, 9, ''], [2021, 'VF-21', 0, 10, ''], [2022, 'VF-22', 37, 8, 'Pole in Brazil'], [2023, 'VF-23', 12, 10, ''],
+  [2024, 'VF-24', 58, 7, ''], [2025, 'VF-25', 79, 8, 'P4 in Mexico City'], [2026, 'VF-26', 31, 7, 'After 20 of 23 rounds'],
+];
+
+export const lastRace = { round: 20, name: 'São Paulo Grand Prix', date: '8 Nov', results: [['Oliver Bearman', 'P17'], ['Rafael Câmara', 'P20']], note: 'Câmara reached the flag on his Grand Prix debut.' };
